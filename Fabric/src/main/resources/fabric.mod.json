@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "multiloader",
+  "version": "${version}",
+  "name": "Example Mod",
+  "description": "This is an example description! Tell everyone what your mod is about!",
+  "authors": [
+    "Corgi Taco"
+  ],
+  "contact": {
+    "homepage": "https://github.com/CorgiTaco/Corgis-MultiLoader-Template",
+    "sources": "https://github.com/CorgiTaco/Corgis-MultiLoader-Template"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/modid/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.example.examplemod.ExampleModFabric"
+    ]
+  },
+  "mixins": [
+    "multiloader.mixins.json",
+    "multiloader.fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.13",
+    "fabric": "*",
+    "minecraft": ">=1.18.2",
+    "java": ">=17"
+  }
+}
+  
