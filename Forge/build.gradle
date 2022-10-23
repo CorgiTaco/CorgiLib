@@ -135,6 +135,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     compileOnly project(":Common")
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    library shadow("blue.endless:jankson:${jankson_version}")
     dataImplementation sourceSets.main.output
 }
 reg.configureJarTask(shadowJar)

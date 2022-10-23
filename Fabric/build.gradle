@@ -62,23 +62,15 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
     implementation project(":Common")
 
-
-//    modImplementation("com.github.CorgiTaco:databreaker:${databreaker_version}") {
-//        exclude module: "fabric-loader"
-//    }
-
-//    modImplementation "curse.maven:starlight-521783:3667443"
-//    modImplementation "curse.maven:cyanide-543444:3757528"
-//    modImplementation "curse.maven:iris-455508:3770305"
-//
-//    modImplementation "curse.maven:sodium-394468:3669187"
-//
-//    runtimeOnly compileOnly('org.joml:joml:1.10.2')
-//    runtimeOnly compileOnly("org.anarres:jcpp:1.4.14")
+    include implementation("com.electronwill.night-config:toml:${nightconfig_version}")
+    include implementation("com.electronwill.night-config:core:${nightconfig_version}")
+    shadow("blue.endless:jankson:${jankson_version}")
 }
 reg.configureJarTask(shadowJar)
 
 loom {
+    accessWidenerPath = project(":Common").file("src/main/resources/corgilib.aw")
+
     runs {
         def args = []
 

@@ -1,0 +1,8 @@
+{
+  "corgilib.worldRegistryExport.exists": "World generation export already exists! View it here: %s!",
+  "corgilib.worldRegistryExport.failed": "Uh oh, the world generation export could not be created, check your latest.log!",
+  "corgilib.worldRegistryExport.singleplayer": "World generation export command must be used in single player!",
+  "corgilib.worldRegistryExport.starting": "Starting world generation export, expect server lag & high ram usage...",
+  "corgilib.worldRegistryExport.success": "World generation export successful! View the files here: %s!",
+  "corgilib.clickevent.hovertext": "Click to open!"
+}

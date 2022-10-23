@@ -4,7 +4,7 @@ plugins {
 }
 
 registrationUtils {
-    group 'com.example.examplemod.reg'
+    group 'corgitaco.corgilib.reg'
     projects {
         Common { type 'common'; project ':Common' }
         Fabric { type 'fabric'; project ':Fabric' }

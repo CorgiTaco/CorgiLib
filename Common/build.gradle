@@ -15,7 +15,7 @@ tasks.register('optimise', OptimisePNGTask) {
 }
 
 minecraft {
-//    accessWideners(project.file("src/main/resources/byg.aw"))
+    accessWideners(project.file("src/main/resources/corgilib.aw"))
     version(minecraft_version)
     runs {
         if (project.hasProperty('common_runs_enabled') ? project.findProperty('common_runs_enabled').toBoolean() : true) {
@@ -35,6 +35,8 @@ sourceSets.main.resources.srcDir 'src/generated/resources'
 dependencies {
     compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.8.5'
     compileOnly('org.ow2.asm:asm-tree:9.3')
+    compileOnly("com.electronwill.night-config:toml:${nightconfig_version}")
+    compileOnly("blue.endless:jankson:${jankson_version}")
 }
 
 processResources {
