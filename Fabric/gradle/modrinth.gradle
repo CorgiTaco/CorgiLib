@@ -18,7 +18,7 @@ task fabric_publishModrinth (type: TaskModrinthUpload){
     token = "$System.env.MODRINTH_KEY"
     projectId = "${project.modrinth_id}"
     versionName = "${archivesBaseName}-${project.version}"
-    versionNumber = project.version
+    versionNumber = "${project.version}-fabric"
     versionType = "${project.release_type}"
     uploadFile = remapJar
     changelog = changelogText
