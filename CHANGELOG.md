@@ -1,3 +1,6 @@
+## 1.0.0.2
+* Relocate Jankson on forge build.
+
 ## 1.0.0.1
 * Allow CorgiLib Fabric to be initialized from elsewhere.
 * Clean up network package.
