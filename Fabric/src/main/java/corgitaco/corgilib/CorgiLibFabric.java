@@ -22,6 +22,7 @@ public class CorgiLibFabric implements ModInitializer {
             CorgiLib.LOGGER.debug(String.format("Attempted to Initialize Oh The Biomes You'll Go (BYG) from \"%s\" but BYG already was initialized from \"%s\", this should not be a problem.", initializedFrom, firstInitialized));
             return;
         }
+        firstInitialized = initializedFrom;
         CorgiLib.init();
         FabricNetworkHandler.init();
         CommandRegistrationCallback.EVENT.register((dispatcher, commandBuildContext, commandSelection) -> CorgiLibCommands.register(dispatcher, commandSelection));
