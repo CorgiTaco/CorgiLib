@@ -1,8 +1,7 @@
-package corgitaco.corgilib.network.packet;
+package corgitaco.corgilib.network;
 
 
 import corgitaco.corgilib.entity.IsInsideStructureTracker;
-import corgitaco.corgilib.network.Packet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.FriendlyByteBuf;

@@ -1,7 +1,6 @@
 package corgitaco.corgilib.network;
 
 import corgitaco.corgilib.CorgiLib;
-import corgitaco.corgilib.network.packet.EntityIsInsideStructureTrackerUpdatePacket;
 import net.minecraft.Util;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;

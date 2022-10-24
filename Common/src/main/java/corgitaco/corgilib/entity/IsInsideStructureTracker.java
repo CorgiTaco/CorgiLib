@@ -2,7 +2,7 @@ package corgitaco.corgilib.entity;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import corgitaco.corgilib.network.packet.EntityIsInsideStructureTrackerUpdatePacket;
+import corgitaco.corgilib.network.EntityIsInsideStructureTrackerUpdatePacket;
 import corgitaco.corgilib.platform.services.ModPlatform;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
