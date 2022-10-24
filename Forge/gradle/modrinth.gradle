@@ -18,7 +18,7 @@ task forge_publishModrinth (type: TaskModrinthUpload){
     token = "$System.env.MODRINTH_KEY"
     projectId = "${project.modrinth_id}"
     versionName = "${archivesBaseName}-${project.version}"
-    versionNumber = "${project.version}-forge"
+    versionNumber = "${project.minecraft_version}-${project.version}-forge"
     versionType = "${project.release_type}"
     uploadFile = shadowJar
     changelog = changelogText
