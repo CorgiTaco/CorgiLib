@@ -45,6 +45,7 @@ public interface Condition {
         register("is_type_tag", EntityTypeTagFilter.CODEC);
         register("conditions_pass", ConditionsPassCondition.CODEC);
         register("is_mob_category_condition", IsMobCategoryCondition.CODEC);
+        register("any", AnyCondition.CODEC);
     }
 
     static void register(String id, Codec<? extends Condition> codec) {
