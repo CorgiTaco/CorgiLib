@@ -38,52 +38,66 @@ public class JanksonUtil {
     public static final JsonGrammar JSON_GRAMMAR = JSON_GRAMMAR_BUILDER.get().build();
 
 
-    public static JsonObject addCommentsAndAlphabeticallySortRecursively(Map<String, String> comments, JsonObject object, String parentKey, boolean alphabeticallySorted) {
-        for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
-            String objectKey = entry.getKey();
-            String commentsKey = parentKey + objectKey;
+    public static JsonElement addCommentsAndAlphabeticallySortRecursively(Map<String, String> comments, JsonElement element, String parentKey, boolean alphabeticallySorted) {
+        if (element instanceof JsonArray jsonArray) {
+            return handleArray(comments, alphabeticallySorted, parentKey, jsonArray);
+        } else if (element instanceof JsonObject object) {
+            for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
+                String objectKey = entry.getKey();
+                String commentsKey = parentKey + objectKey;
 
-            String comment = object.getComment(entry.getKey());
-            if (comments.containsKey(commentsKey) && comment == null) {
-                String commentToAdd = comments.get(commentsKey);
-                object.setComment(objectKey, commentToAdd);
-                comment = commentToAdd;
-            }
+                String comment = object.getComment(entry.getKey());
+                if (comments.containsKey(commentsKey) && comment == null) {
+                    String commentToAdd = comments.get(commentsKey);
+                    object.setComment(objectKey, commentToAdd);
+                    comment = commentToAdd;
+                }
 
-            JsonElement value = entry.getValue();
-            if (value instanceof JsonArray array) {
-                JsonArray sortedJsonElements = new JsonArray();
-                for (JsonElement element : array) {
-                    if (element instanceof JsonObject nestedObject) {
-                        sortedJsonElements.add(addCommentsAndAlphabeticallySortRecursively(comments, nestedObject, entry.getKey() + ".", alphabeticallySorted));
-                    } else if (element instanceof JsonArray array1) {
-                        JsonArrayOfArrays arrayOfArrays = new JsonArrayOfArrays();
-                        arrayOfArrays.addAll(array1);
-                        sortedJsonElements.add(arrayOfArrays);
+                JsonElement value = entry.getValue();
+                if (value instanceof JsonArray array) {
+                    JsonArray jsonElements = handleArray(comments, alphabeticallySorted, entry.getKey(), array);
+
+                    if (!jsonElements.isEmpty()) {
+                        object.put(objectKey, jsonElements, comment);
                     }
                 }
-                if (!sortedJsonElements.isEmpty()) {
-                    object.put(objectKey, sortedJsonElements, comment);
+
+                if (value instanceof JsonObject nestedObject) {
+                    object.put(objectKey, addCommentsAndAlphabeticallySortRecursively(comments, nestedObject, entry.getKey() + ".", alphabeticallySorted), comment);
                 }
             }
 
-            if (value instanceof JsonObject nestedObject) {
-                object.put(objectKey, addCommentsAndAlphabeticallySortRecursively(comments, nestedObject, entry.getKey() + ".", alphabeticallySorted), comment);
+            if (alphabeticallySorted) {
+                JsonObject alphabeticallySortedJsonObject = new JsonObject();
+                TreeMap<String, JsonElement> map = new TreeMap<>(String::compareTo);
+                map.putAll(object);
+                alphabeticallySortedJsonObject.putAll(map);
+                alphabeticallySortedJsonObject.forEach((key, entry) -> {
+                    alphabeticallySortedJsonObject.setComment(key, object.getComment(key));
+                });
+
+                return alphabeticallySortedJsonObject;
+            }
+            return object;
+        } else if (element instanceof JsonPrimitive) {
+            return element;
+        }
+
+        throw new IllegalArgumentException("Unknown Jankson JsonElementType");
+    }
+
+    private static JsonArray handleArray(Map<String, String> comments, boolean alphabeticallySorted, String objectKey, JsonArray array) {
+        JsonArray sortedJsonElements = new JsonArray();
+        for (JsonElement element1 : array) {
+            if (element1 instanceof JsonObject nestedObject) {
+                sortedJsonElements.add(addCommentsAndAlphabeticallySortRecursively(comments, nestedObject, objectKey + ".", alphabeticallySorted));
+            } else if (element1 instanceof JsonArray array1) {
+                JsonArrayOfArrays arrayOfArrays = new JsonArrayOfArrays();
+                arrayOfArrays.addAll(array1);
+                sortedJsonElements.add(arrayOfArrays);
             }
         }
-
-        if (alphabeticallySorted) {
-            JsonObject alphabeticallySortedJsonObject = new JsonObject();
-            TreeMap<String, JsonElement> map = new TreeMap<>(String::compareTo);
-            map.putAll(object);
-            alphabeticallySortedJsonObject.putAll(map);
-            alphabeticallySortedJsonObject.forEach((key, entry) -> {
-                alphabeticallySortedJsonObject.setComment(key, object.getComment(key));
-            });
-
-            return alphabeticallySortedJsonObject;
-        }
-        return object;
+        return sortedJsonElements;
     }
 
     public static <T> void createConfig(Path path, Codec<T> codec, String header, Map<String, String> comments, DynamicOps<JsonElement> ops, T from) {

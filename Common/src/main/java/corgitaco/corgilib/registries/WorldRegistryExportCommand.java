@@ -1,19 +1,18 @@
 package corgitaco.corgilib.registries;
 
 import blue.endless.jankson.Jankson;
-import blue.endless.jankson.JsonObject;
+import blue.endless.jankson.JsonElement;
 import blue.endless.jankson.api.SyntaxError;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.serialization.DynamicOps;
-import com.mojang.serialization.JsonOps;
 import corgitaco.corgilib.CorgiLib;
 import corgitaco.corgilib.platform.services.ModPlatform;
+import corgitaco.corgilib.serialization.jankson.JanksonJsonOps;
 import corgitaco.corgilib.serialization.jankson.JanksonUtil;
 import it.unimi.dsi.fastutil.Function;
 import net.minecraft.ChatFormatting;
@@ -136,9 +135,9 @@ public class WorldRegistryExportCommand {
             String fileName = path.getFileName().toString();
             if (fileName.endsWith(".json")) {
                 try {
-                    JsonObject load = Jankson.builder().build().load(path.toFile());
+                    JsonElement load = Jankson.builder().allowBareRootObject().build().load(path.toFile());
                     load = JanksonUtil.addCommentsAndAlphabeticallySortRecursively(COMMENTS, load, "", true);
-                    Files.write(path, load.toJson(JanksonUtil.JSON_GRAMMAR).getBytes());
+                    Files.write(path, Jankson.builder().allowBareRootObject().build().load(load.toJson(JanksonUtil.JSON_GRAMMAR)).toJson(JanksonUtil.JSON_GRAMMAR).getBytes());
                 } catch (IOException | SyntaxError e) {
                     CorgiLib.LOGGER.error(String.format("\"%s\" had errors: ", path.toString()));
                     e.printStackTrace();
@@ -152,12 +151,11 @@ public class WorldRegistryExportCommand {
         Files.createDirectories(reports);
         RegistryAccess registry = builtin ? RegistryAccess.builtinCopy() : source.getLevel().registryAccess();
 
-        DynamicOps<JsonElement> ops = RegistryOps.create(JsonOps.INSTANCE, registry);
+        DynamicOps<JsonElement> ops = RegistryOps.create(JanksonJsonOps.INSTANCE, registry);
 
         for (RegistryAccess.RegistryData<?> knownRegistry : RegistryAccess.knownRegistries()) {
             dumpRegistryCap(reports, registry, ops, knownRegistry);
         }
-
     }
 
 
