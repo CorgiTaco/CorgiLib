@@ -1,16 +1,11 @@
 package corgitaco.corgilib.registries;
 
-import blue.endless.jankson.Jankson;
 import blue.endless.jankson.JsonElement;
-import blue.endless.jankson.api.SyntaxError;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.serialization.DynamicOps;
-import corgitaco.corgilib.CorgiLib;
 import corgitaco.corgilib.platform.services.ModPlatform;
 import corgitaco.corgilib.serialization.jankson.JanksonJsonOps;
 import corgitaco.corgilib.serialization.jankson.JanksonUtil;
@@ -32,11 +27,9 @@ import net.minecraft.resources.ResourceKey;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 public class WorldRegistryExportCommand {
 
@@ -70,23 +63,16 @@ public class WorldRegistryExportCommand {
 
 
         Path finalExportPath = ModPlatform.PLATFORM.modConfigDir().resolve("world_registry_export").resolve(builtin ? "builtin" : "world").resolve("data");
-        Path exportPath = finalExportPath.resolve("cache");
         Component exportFileComponent = Component.literal(finalExportPath.toString()).withStyle(ChatFormatting.UNDERLINE).withStyle(text -> text.withColor(TextColor.fromLegacyFormat(ChatFormatting.AQUA)).withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, finalExportPath.toString())).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable("corgilib.clickevent.hovertext"))));
 
-        if (exportPath.toFile().exists()) {
+        if (finalExportPath.toFile().exists()) {
             source.sendFailure(Component.translatable("corgilib.worldRegistryExport.exists", exportFileComponent).withStyle(ChatFormatting.RED));
             return 0;
         }
         source.sendSuccess(Component.translatable("corgilib.worldRegistryExport.starting").withStyle(ChatFormatting.YELLOW), true);
 
         try {
-            generateFiles(builtin, source, exportPath);
-
-            if (withComments) {
-                addComments(exportPath);
-            }
-
-            setupAndUseDataPackDirectoriesStructure(finalExportPath, exportPath);
+            generateFiles(builtin, source, finalExportPath, withComments);
 
             createPackMCMeta(finalExportPath.getParent(), builtin);
             source.sendSuccess(Component.translatable("corgilib.worldRegistryExport.success", exportFileComponent).withStyle(ChatFormatting.GREEN), true);
@@ -98,68 +84,19 @@ public class WorldRegistryExportCommand {
         }
     }
 
-    private static void setupAndUseDataPackDirectoriesStructure(Path finalExportPath, Path exportPath) throws IOException {
-        Path result = exportPath.resolve("reports").resolve("worldgen");
-
-        try (Stream<Path> stream = Files.walk(result)) {
-            stream.sorted(Comparator.reverseOrder()).forEach(path -> {
-                try {
-                    if (path.getFileName().toString().endsWith(".json")) {
-                        String newTarget = result.relativize(path).toString();
-                        Path newPath = finalExportPath.resolve(newTarget);
-                        Files.createDirectories(newPath.getParent());
-                        byte[] bytes = Files.readAllBytes(path);
-                        Files.write(newPath, bytes);
-                    }
-
-                    Files.delete(path);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-        }
-
-        try (Stream<Path> stream = Files.walk(exportPath)) {
-            stream.sorted(Comparator.reverseOrder()).forEach(path -> {
-                try {
-                    Files.delete(path);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-        }
-    }
-
-    private static void addComments(Path exportPath) throws IOException {
-        Files.walk(exportPath).forEach(path -> {
-            String fileName = path.getFileName().toString();
-            if (fileName.endsWith(".json")) {
-                try {
-                    JsonElement load = Jankson.builder().allowBareRootObject().build().load(path.toFile());
-                    load = JanksonUtil.addCommentsAndAlphabeticallySortRecursively(COMMENTS, load, "", true);
-                    Files.write(path, Jankson.builder().allowBareRootObject().build().load(load.toJson(JanksonUtil.JSON_GRAMMAR)).toJson(JanksonUtil.JSON_GRAMMAR).getBytes());
-                } catch (IOException | SyntaxError e) {
-                    CorgiLib.LOGGER.error(String.format("\"%s\" had errors: ", path.toString()));
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    private static void generateFiles(boolean builtin, CommandSourceStack source, Path exportPath) throws IOException {
-        Path reports = exportPath.resolve("reports").resolve("worldgen");
-        Files.createDirectories(reports);
+    private static void generateFiles(boolean builtin, CommandSourceStack source, Path exportPath, boolean withComments) throws IOException {
+        Files.createDirectories(exportPath);
         RegistryAccess registry = builtin ? RegistryAccess.builtinCopy() : source.getLevel().registryAccess();
 
         DynamicOps<JsonElement> ops = RegistryOps.create(JanksonJsonOps.INSTANCE, registry);
 
         for (RegistryAccess.RegistryData<?> knownRegistry : RegistryAccess.knownRegistries()) {
-            dumpRegistryCap(reports, registry, ops, knownRegistry);
+            dumpRegistryCap(exportPath, registry, ops, knownRegistry, withComments);
         }
     }
 
 
-    private static <T> void dumpRegistryCap(Path root, RegistryAccess registryAccess, DynamicOps<JsonElement> ops, RegistryAccess.RegistryData<T> data) {
+    private static <T> void dumpRegistryCap(Path root, RegistryAccess registryAccess, DynamicOps<JsonElement> ops, RegistryAccess.RegistryData<T> data, boolean withComments) {
         ResourceKey<? extends Registry<T>> resourceKey = data.key();
         Registry<T> registry = registryAccess.ownedRegistryOrThrow(resourceKey);
 
@@ -169,10 +106,16 @@ public class WorldRegistryExportCommand {
             try {
                 Optional<JsonElement> jsonElement = data.codec().encodeStart(ops, resourceKeyTEntry.getValue()).resultOrPartial(($$1x) -> {
                 });
+
+
                 if (jsonElement.isPresent()) {
-                    Gson gsonBuilder = new GsonBuilder().setPrettyPrinting().create();
                     Files.createDirectories(path.getParent());
-                    Files.write(path, gsonBuilder.toJson(jsonElement.get()).getBytes());
+
+                    JsonElement loadedElement = jsonElement.get();
+                    if (withComments) {
+                        loadedElement = JanksonUtil.addCommentsAndAlphabeticallySortRecursively(COMMENTS, loadedElement, "", true);
+                        Files.write(path, loadedElement.toJson(JanksonUtil.JSON_GRAMMAR).getBytes());
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
