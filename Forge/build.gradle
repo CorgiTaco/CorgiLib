@@ -201,7 +201,6 @@ task forge_publishCurseForge(type: TaskPublishCurseForge) {
     mainFile.changelog = changelogText
     mainFile.changelogType = "markdown"
     mainFile.releaseType = "${project.release_type}"
-    mainFile.addRequirement("terrablender")
     mainFile.addGameVersion("${project.minecraft_version}")
     mainFile.addModLoader("forge")
 }

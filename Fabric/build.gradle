@@ -162,7 +162,6 @@ task fabric_publishCurseForge(type: TaskPublishCurseForge) {
     mainFile.changelog = changelogText
     mainFile.changelogType = "markdown"
     mainFile.releaseType = "${project.release_type}"
-    mainFile.addRequirement("terrablender-fabric")
     mainFile.addGameVersion("${project.minecraft_version}")
     mainFile.addModLoader("fabric")
 }
