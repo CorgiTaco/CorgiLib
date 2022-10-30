@@ -1,3 +1,7 @@
+## 1.0.0.6
+* Use correct `/corgilib worldregistryexport` command data export path.
+* Fix `RegistryAccessor` mixin being called exclusively on clients. Fixes servers crashing.
+
 ## 1.0.0.5
 * Fix & optimize `/corgilib worldRegistryExport` command.
 
