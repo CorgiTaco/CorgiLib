@@ -102,11 +102,17 @@ public class WorldRegistryExportCommand {
 
         for (Map.Entry<ResourceKey<T>, T> resourceKeyTEntry : registry.entrySet()) {
             ResourceKey<T> resourceKeyTEntryKey = resourceKeyTEntry.getKey();
-            Path path = root.resolve(resourceKeyTEntryKey.location().getNamespace()).resolve(resourceKey.location().getPath()).resolve(resourceKeyTEntryKey.location().getPath() + ".json");
-            try {
-                Optional<JsonElement> jsonElement = data.codec().encodeStart(ops, resourceKeyTEntry.getValue()).resultOrPartial(($$1x) -> {
-                });
 
+            Path resolve = root.resolve(resourceKeyTEntryKey.location().getNamespace());
+
+            String resourceKeyNamespace = resourceKey.location().getNamespace();
+            if (ModPlatform.PLATFORM.getPlatformName().equalsIgnoreCase("Forge") && !resourceKeyNamespace.equalsIgnoreCase("minecraft")) {
+                resolve = resolve.resolve(resourceKeyNamespace);
+            }
+
+            Path path = resolve.resolve(resourceKey.location().getPath()).resolve(resourceKeyTEntryKey.location().getPath() + ".json");
+            try {
+                Optional<JsonElement> jsonElement = data.codec().encodeStart(ops, resourceKeyTEntry.getValue()).result();
 
                 if (jsonElement.isPresent()) {
                     Files.createDirectories(path.getParent());

@@ -13,10 +13,10 @@
     "access.villagertrades.ItemsAndEmeraldsForItemsAccess",
     "access.villagertrades.ItemsForEmeraldsAccess",
     "access.villagertrades.SuspiciousStewForEmeraldAccess",
-    "access.villagertrades.TreasureMapForEmeraldAccess"
+    "access.villagertrades.TreasureMapForEmeraldAccess",
+    "access.RegistryAccessor"
   ],
   "client": [
-    "access.RegistryAccessor"
   ],
   "server": [
   ],
