@@ -221,8 +221,7 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
         }
 
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos().set(pos);
-        int logDepth;
-        for (logDepth = 0; logDepth < maxLogDepth; logDepth++) {
+        for (int logDepth = 0; logDepth < maxLogDepth; logDepth++) {
             mutableBlockPos.move(Direction.DOWN);
             BlockState blockState = level.getBlockState(mutableBlockPos);
             // TODO: Use a tag!
@@ -239,6 +238,6 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
     }
 
     public static IllegalArgumentException noTreePartPresent(ResourceLocation location) {
-        throw new IllegalArgumentException(String.format("\"%s\" is not a valid tree part.", location));
+        return new IllegalArgumentException(String.format("\"%s\" is not a valid tree part.", location));
     }
 }
