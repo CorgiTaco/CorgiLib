@@ -6,7 +6,7 @@ import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.serialization.DynamicOps;
-import corgitaco.corgilib.platform.services.ModPlatform;
+import corgitaco.corgilib.platform.ModPlatform;
 import corgitaco.corgilib.serialization.jankson.JanksonJsonOps;
 import corgitaco.corgilib.serialization.jankson.JanksonUtil;
 import it.unimi.dsi.fastutil.Function;

@@ -1,4 +1,4 @@
-package corgitaco.corgilib.platform.services;
+package corgitaco.corgilib.platform;
 
 import corgitaco.corgilib.CorgiLib;
 import corgitaco.corgilib.network.Packet;

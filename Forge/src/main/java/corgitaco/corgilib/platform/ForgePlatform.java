@@ -3,7 +3,6 @@ package corgitaco.corgilib.platform;
 import com.google.auto.service.AutoService;
 import corgitaco.corgilib.network.ForgeNetworkHandler;
 import corgitaco.corgilib.network.Packet;
-import corgitaco.corgilib.platform.services.ModPlatform;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;

@@ -3,7 +3,6 @@ package corgitaco.corgilib.platform;
 import com.google.auto.service.AutoService;
 import corgitaco.corgilib.network.FabricNetworkHandler;
 import corgitaco.corgilib.network.Packet;
-import corgitaco.corgilib.platform.services.ModPlatform;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.level.ServerPlayer;
 
