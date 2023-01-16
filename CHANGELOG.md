@@ -1,3 +1,6 @@
+## 1.0.0.7
+* Switch to Access Transformers/Wideners.
+
 ## 1.0.0.6
 * Use correct `/corgilib worldregistryexport` command data export path.
 * Fix `RegistryAccessor` mixin being called exclusively on clients. Fixes servers crashing.
