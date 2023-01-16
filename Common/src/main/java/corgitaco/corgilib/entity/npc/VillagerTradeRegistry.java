@@ -5,7 +5,6 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corgitaco.corgilib.CorgiLib;
 import corgitaco.corgilib.core.CorgiLibRegistry;
-import corgitaco.corgilib.mixin.access.villagertrades.*;
 import corgitaco.corgilib.reg.RegistrationProvider;
 import corgitaco.corgilib.serialization.codec.CodecUtil;
 import net.minecraft.Util;
@@ -27,40 +26,40 @@ public class VillagerTradeRegistry {
 
     private final static Codec<VillagerTrades.EmeraldForItems> EMERALD_FOR_ITEMS_CODEC = RecordCodecBuilder.create(builder ->
             builder.group(
-                    ITEM_CODEC.fieldOf("item").forGetter(listing -> ((EmeraldForItemsAccess) listing).byg_getItem()),
-                    Codec.INT.fieldOf("cost").forGetter(listing -> ((EmeraldForItemsAccess) listing).byg_getCost()),
-                    Codec.INT.fieldOf("max_uses").forGetter(listing -> ((EmeraldForItemsAccess) listing).byg_getMaxUses()),
-                    Codec.INT.fieldOf("villager_xp").forGetter(listing -> ((EmeraldForItemsAccess) listing).byg_getVillagerXp())
+                    ITEM_CODEC.fieldOf("item").forGetter(listing -> listing.item),
+                    Codec.INT.fieldOf("cost").forGetter(listing -> listing.cost),
+                    Codec.INT.fieldOf("max_uses").forGetter(listing -> listing.maxUses),
+                    Codec.INT.fieldOf("villager_xp").forGetter(listing -> listing.villagerXp)
             ).apply(builder, VillagerTrades.EmeraldForItems::new)
     );
 
     private final static Codec<VillagerTrades.ItemsForEmeralds> ITEMS_FOR_EMERALDS_CODEC = RecordCodecBuilder.create(builder ->
             builder.group(
-                    ITEM_CODEC.fieldOf("item").forGetter(listing -> ((ItemsForEmeraldsAccess) listing).byg_getItemStack().getItem()),
-                    Codec.INT.fieldOf("emerald_cost").forGetter(listing -> ((ItemsForEmeraldsAccess) listing).byg_getEmeraldCost()),
-                    Codec.INT.fieldOf("number_of_items").forGetter(listing -> ((ItemsForEmeraldsAccess) listing).byg_getNumberOfItems()),
-                    Codec.INT.fieldOf("max_uses").forGetter(listing -> ((ItemsForEmeraldsAccess) listing).byg_getMaxUses()),
-                    Codec.INT.fieldOf("villager_xp").forGetter(listing -> ((ItemsForEmeraldsAccess) listing).byg_getVillagerXp())
+                    ITEM_CODEC.fieldOf("item").forGetter(listing -> listing.itemStack.getItem()),
+                    Codec.INT.fieldOf("emerald_cost").forGetter(listing -> listing.emeraldCost),
+                    Codec.INT.fieldOf("number_of_items").forGetter(listing -> listing.numberOfItems),
+                    Codec.INT.fieldOf("max_uses").forGetter(listing -> listing.maxUses),
+                    Codec.INT.fieldOf("villager_xp").forGetter(listing -> listing.villagerXp)
             ).apply(builder, VillagerTrades.ItemsForEmeralds::new)
     );
 
     private final static Codec<VillagerTrades.ItemsAndEmeraldsToItems> ITEMS_AND_EMERALDS_TO_ITEMS_CODEC = RecordCodecBuilder.create(builder ->
             builder.group(
-                    ITEM_CODEC.fieldOf("from_item").forGetter(listing -> ((ItemsAndEmeraldsForItemsAccess) listing).byg_getFromItem().getItem()),
-                    Codec.INT.fieldOf("from_count").forGetter(listing -> ((ItemsAndEmeraldsForItemsAccess) listing).byg_getFromCount()),
-                    Codec.INT.fieldOf("emerald_cost").forGetter(listing -> ((ItemsAndEmeraldsForItemsAccess) listing).byg_getEmeraldCost()),
-                    ITEM_CODEC.fieldOf("to_item").forGetter(listing -> ((ItemsAndEmeraldsForItemsAccess) listing).byg_getToItem().getItem()),
-                    Codec.INT.fieldOf("to_count").forGetter(listing -> ((ItemsAndEmeraldsForItemsAccess) listing).byg_getToCount()),
-                    Codec.INT.fieldOf("max_uses").forGetter(listing -> ((ItemsAndEmeraldsForItemsAccess) listing).byg_getMaxUses()),
-                    Codec.INT.fieldOf("villager_xp").forGetter(listing -> ((ItemsAndEmeraldsForItemsAccess) listing).byg_getVillagerXp())
+                    ITEM_CODEC.fieldOf("from_item").forGetter(listing -> listing.fromItem.getItem()),
+                    Codec.INT.fieldOf("from_count").forGetter(listing -> listing.fromCount),
+                    Codec.INT.fieldOf("emerald_cost").forGetter(listing -> listing.emeraldCost),
+                    ITEM_CODEC.fieldOf("to_item").forGetter(listing -> listing.toItem.getItem()),
+                    Codec.INT.fieldOf("to_count").forGetter(listing -> listing.toCount),
+                    Codec.INT.fieldOf("max_uses").forGetter(listing -> listing.maxUses),
+                    Codec.INT.fieldOf("villager_xp").forGetter(listing -> listing.villagerXp)
             ).apply(builder, VillagerTrades.ItemsAndEmeraldsToItems::new)
     );
 
     private final static Codec<VillagerTrades.SuspiciousStewForEmerald> SUSPICIOUS_STEW_FOR_EMERALD_CODEC = RecordCodecBuilder.create(builder ->
             builder.group(
-                    MOB_EFFECT_CODEC.fieldOf("mob_effect").forGetter(listing -> ((SuspiciousStewForEmeraldAccess) listing).byg_getEffect()),
-                    Codec.INT.fieldOf("duration").forGetter(listing -> ((SuspiciousStewForEmeraldAccess) listing).byg_getDuration()),
-                    Codec.INT.fieldOf("xp").forGetter(listing -> ((SuspiciousStewForEmeraldAccess) listing).byg_getXp())
+                    MOB_EFFECT_CODEC.fieldOf("mob_effect").forGetter(listing -> listing.effect),
+                    Codec.INT.fieldOf("duration").forGetter(listing -> listing.duration),
+                    Codec.INT.fieldOf("xp").forGetter(listing -> listing.xp)
             ).apply(builder, VillagerTrades.SuspiciousStewForEmerald::new)
     );
 
@@ -74,12 +73,12 @@ public class VillagerTradeRegistry {
 
     private final static Codec<VillagerTrades.TreasureMapForEmeralds> TREASURE_MAP_FOR_EMERALDS_CODEC = RecordCodecBuilder.create(builder ->
             builder.group(
-                    Codec.INT.fieldOf("emerald_cost").forGetter(listing -> ((TreasureMapForEmeraldAccess) listing).byg_getEmeraldCost()),
-                    TagKey.hashedCodec(Registry.STRUCTURE_REGISTRY).fieldOf("destination").forGetter(listing -> ((TreasureMapForEmeraldAccess) listing).byg_getDestination()),
-                    Codec.STRING.fieldOf("display_name").forGetter(listing -> ((TreasureMapForEmeraldAccess) listing).byg_getDisplayName()),
-                    MAP_DECORATION_TYPE_CODEC.fieldOf("destination_type").forGetter(listing -> ((TreasureMapForEmeraldAccess) listing).byg_getDestinationType()),
-                    Codec.INT.fieldOf("max_uses").forGetter(listing -> ((TreasureMapForEmeraldAccess) listing).byg_getMaxUses()),
-                    Codec.INT.fieldOf("villager_xp").forGetter(listing -> ((TreasureMapForEmeraldAccess) listing).byg_getVillagerXp())
+                    Codec.INT.fieldOf("emerald_cost").forGetter(listing -> listing.emeraldCost),
+                    TagKey.hashedCodec(Registry.STRUCTURE_REGISTRY).fieldOf("destination").forGetter(listing -> listing.destination),
+                    Codec.STRING.fieldOf("display_name").forGetter(listing -> listing.displayName),
+                    MAP_DECORATION_TYPE_CODEC.fieldOf("destination_type").forGetter(listing -> listing.destinationType),
+                    Codec.INT.fieldOf("max_uses").forGetter(listing -> listing.maxUses),
+                    Codec.INT.fieldOf("villager_xp").forGetter(listing -> listing.villagerXp)
             ).apply(builder, VillagerTrades.TreasureMapForEmeralds::new)
     );
 

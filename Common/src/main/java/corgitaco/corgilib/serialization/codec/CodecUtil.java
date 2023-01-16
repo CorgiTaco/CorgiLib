@@ -5,12 +5,9 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import corgitaco.corgilib.mixin.access.ColorAccess;
-import corgitaco.corgilib.mixin.access.StyleAccess;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.ClickEvent;
-import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Difficulty;
@@ -97,23 +94,6 @@ public class CodecUtil {
 
 
     public static Codec<Integer> COLOR_FROM_HEX = Codec.STRING.comapFlatMap(validateColorHex(), Integer::toHexString);
-
-
-    public static final Codec<Style> STYLE_CODEC = RecordCodecBuilder.create(builder ->
-            builder.group(
-                    COLOR_FROM_HEX.optionalFieldOf("color", ChatFormatting.WHITE.getColor()).forGetter(style -> style.getColor() != null ? Integer.valueOf(style.getColor().getValue()) : ChatFormatting.WHITE.getColor()),
-                    Codec.BOOL.optionalFieldOf("bold", false).forGetter(Style::isBold),
-                    Codec.BOOL.optionalFieldOf("italic", false).forGetter(Style::isItalic),
-                    Codec.BOOL.optionalFieldOf("underlined", false).forGetter(Style::isUnderlined),
-                    Codec.BOOL.optionalFieldOf("strikethrough", false).forGetter(Style::isStrikethrough),
-                    Codec.BOOL.optionalFieldOf("obfuscated", false).forGetter(Style::isObfuscated),
-                    CLICK_EVENT_CODEC.optionalFieldOf("click_event").forGetter((style) -> style.getClickEvent() != null ? Optional.of(style.getClickEvent()) : Optional.empty())
-            ).apply(builder,
-                    (color, bold, italic, underlined, strikethrough, obfuscated, clickEvent) ->
-                            StyleAccess.create(ColorAccess.create(color), bold, italic, underlined, strikethrough, obfuscated, clickEvent.orElse(null), null, null, null)
-            )
-    );
-
 
     public record LazyCodec<TYPE>(Supplier<Codec<TYPE>> delegate) implements Codec<TYPE> {
 

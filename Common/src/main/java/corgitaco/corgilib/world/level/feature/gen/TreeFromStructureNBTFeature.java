@@ -1,8 +1,6 @@
 package corgitaco.corgilib.world.level.feature.gen;
 
 import com.mojang.serialization.Codec;
-import corgitaco.corgilib.mixin.access.LeavesBlockAccess;
-import corgitaco.corgilib.mixin.access.StructureTemplateAccess;
 import corgitaco.corgilib.world.level.feature.gen.configurations.TreeFromStructureNBTConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -54,8 +52,8 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
         }
         StructureTemplate baseTemplate = baseTemplateOptional.get();
         StructureTemplate canopyTemplate = canopyTemplateOptional.get();
-        List<StructureTemplate.Palette> basePalettes = ((StructureTemplateAccess) baseTemplate).byg_getPalettes();
-        List<StructureTemplate.Palette> canopyPalettes = ((StructureTemplateAccess) canopyTemplate).byg_getPalettes();
+        List<StructureTemplate.Palette> basePalettes = baseTemplate.palettes;
+        List<StructureTemplate.Palette> canopyPalettes = canopyTemplate.palettes;
         BlockPos origin = featurePlaceContext.origin();
         if (DEBUG) {
             level.setBlock(origin, Blocks.DIAMOND_BLOCK.defaultBlockState(), 2);
@@ -155,7 +153,7 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
                 level.setBlock(pos, state, 2);
                 BlockState finalState = state;
                 Runnable postProcess = () -> {
-                    BlockState blockState = LeavesBlockAccess.byg_invokeUpdateDistance(finalState, level, pos);
+                    BlockState blockState = LeavesBlock.updateDistance(finalState, level, pos);
                     if (blockState.getValue(LeavesBlock.DISTANCE) < LeavesBlock.DECAY_DISTANCE) {
                         leavePositions.add(pos);
                         level.setBlock(pos, blockState, 2);

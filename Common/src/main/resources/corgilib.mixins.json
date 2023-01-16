@@ -4,17 +4,7 @@
   "package": "corgitaco.corgilib.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "MixinEntity",
-    "access.ColorAccess",
-    "access.LeavesBlockAccess",
-    "access.StructureTemplateAccess",
-    "access.StyleAccess",
-    "access.villagertrades.EmeraldForItemsAccess",
-    "access.villagertrades.ItemsAndEmeraldsForItemsAccess",
-    "access.villagertrades.ItemsForEmeraldsAccess",
-    "access.villagertrades.SuspiciousStewForEmeraldAccess",
-    "access.villagertrades.TreasureMapForEmeraldAccess",
-    "access.RegistryAccessor"
+    "MixinEntity"
   ],
   "client": [
   ],
