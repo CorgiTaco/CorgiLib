@@ -65,7 +65,7 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
 
         List<StructureTemplate.StructureBlockInfo> center = trunkBasePalette.blocks(Blocks.WHITE_WOOL);
         if (center.size() > 1) {
-            throw new IllegalArgumentException("There cannot be more than one central position.");
+            throw new IllegalArgumentException("There cannot be more than one central position. Central position is specified with white wool.");
         }
         BlockPos centerOffset = center.get(0).pos;
         centerOffset = new BlockPos(-centerOffset.getX(), 0, -centerOffset.getZ());
@@ -80,7 +80,6 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
         Set<BlockPos> leavePositions = new HashSet<>();
         Set<BlockPos> trunkPositions = new HashSet<>();
 
-
         int trunkLength = config.height().sample(random);
         final int maxTrunkBuildingDepth = config.maxLogDepth();
 
@@ -89,27 +88,31 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
             if (!isOnGround(config.maxLogDepth(), level, pos)) {
                 return false; // Exit because all positions are not on ground.
             }
-
         }
 
         fillLogsUnder(random, logProvider, level, origin, placeSettings, centerOffset, logBuilders, maxTrunkBuildingDepth);
         placeLogsWithRotation(logProvider, level, origin, random, placeSettings, centerOffset, logs, trunkPositions);
-        placeCanopy(config, logProvider, leavesProvider, level, origin, random, placeSettings, randomCanopyPalette, center, leavePositions, trunkPositions, trunkLength);
+        List<StructureTemplate.StructureBlockInfo> canopyAnchor = trunkBasePalette.blocks(Blocks.YELLOW_WOOL);
+
+        if (!canopyAnchor.isEmpty()) {
+            if (canopyAnchor.size() > 1)  {
+                throw new IllegalArgumentException("There cannot be more than one central canopy position. Canopy central position is specified with yellow wool on the trunk palette.");
+            }
+            placeCanopy(config, logProvider, leavesProvider, level, canopyAnchor.get(0).pos, random, placeSettings, randomCanopyPalette,  leavePositions, trunkPositions, trunkLength);
+        } else {
+            placeCanopy(config, logProvider, leavesProvider, level, origin, random, placeSettings, randomCanopyPalette, leavePositions, trunkPositions, trunkLength);
+        }
+
         placeTreeDecorations(config.treeDecorators(), level, random, leavePositions, trunkPositions);
 
         return true;
     }
 
-    private static void placeCanopy(TreeFromStructureNBTConfig config, BlockStateProvider logProvider, BlockStateProvider leavesProvider, WorldGenLevel level, BlockPos origin, RandomSource random, StructurePlaceSettings placeSettings, StructureTemplate.Palette randomCanopyPalette, List<StructureTemplate.StructureBlockInfo> center, Set<BlockPos> leavePositions, Set<BlockPos> trunkPositions, int trunkLength) {
+    private static void placeCanopy(TreeFromStructureNBTConfig config, BlockStateProvider logProvider, BlockStateProvider leavesProvider, WorldGenLevel level, BlockPos origin, RandomSource random, StructurePlaceSettings placeSettings, StructureTemplate.Palette randomCanopyPalette, Set<BlockPos> leavePositions, Set<BlockPos> trunkPositions, int trunkLength) {
         List<StructureTemplate.StructureBlockInfo> leaves = randomCanopyPalette.blocks(config.leavesTarget());
         List<StructureTemplate.StructureBlockInfo> canopyLogs = randomCanopyPalette.blocks(config.logTarget());
         List<StructureTemplate.StructureBlockInfo> canopyAnchor = randomCanopyPalette.blocks(Blocks.WHITE_WOOL);
-        if (center.size() > 1) {
-            throw new IllegalArgumentException("There cannot be more than one central position.");
-        }
-        if (center.isEmpty()) {
-            throw new IllegalArgumentException("Canopy is missing anchor block (yellow wool).");
-        }
+
         StructureTemplate.StructureBlockInfo structureBlockInfo = canopyAnchor.get(0);
         BlockPos canopyCenterOffset = structureBlockInfo.pos;
         canopyCenterOffset = new BlockPos(-canopyCenterOffset.getX(), trunkLength, -canopyCenterOffset.getZ());
