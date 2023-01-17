@@ -90,8 +90,8 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
             }
         }
 
-        fillLogsUnder(random, logProvider, level, origin, placeSettings, centerOffset, logBuilders, maxTrunkBuildingDepth);
-        placeLogsWithRotation(logProvider, level, origin, random, placeSettings, centerOffset, logs, trunkPositions);
+        placeTrunk(config, logProvider, leavesProvider, level, origin, random, placeSettings, trunkBasePalette, centerOffset, logs, logBuilders, leavePositions, trunkPositions, maxTrunkBuildingDepth);
+
         List<StructureTemplate.StructureBlockInfo> canopyAnchor = trunkBasePalette.blocks(Blocks.YELLOW_WOOL);
 
         if (!canopyAnchor.isEmpty()) {
@@ -106,6 +106,12 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
         placeTreeDecorations(config.treeDecorators(), level, random, leavePositions, trunkPositions);
 
         return true;
+    }
+
+    private static void placeTrunk(TreeFromStructureNBTConfig config, BlockStateProvider logProvider, BlockStateProvider leavesProvider, WorldGenLevel level, BlockPos origin, RandomSource random, StructurePlaceSettings placeSettings, StructureTemplate.Palette trunkBasePalette, BlockPos centerOffset, List<StructureTemplate.StructureBlockInfo> logs, List<StructureTemplate.StructureBlockInfo> logBuilders, Set<BlockPos> leavePositions, Set<BlockPos> trunkPositions, int maxTrunkBuildingDepth) {
+        fillLogsUnder(random, logProvider, level, origin, placeSettings, centerOffset, logBuilders, maxTrunkBuildingDepth);
+        placeLogsWithRotation(logProvider, level, origin, random, placeSettings, centerOffset, logs, trunkPositions);
+        placeLeavesWithCalculatedDistanceAndRotation(leavesProvider, level, origin, random, placeSettings, trunkBasePalette.blocks(config.leavesTarget()), leavePositions, centerOffset);
     }
 
     private static void placeCanopy(TreeFromStructureNBTConfig config, BlockStateProvider logProvider, BlockStateProvider leavesProvider, WorldGenLevel level, BlockPos origin, RandomSource random, StructurePlaceSettings placeSettings, StructureTemplate.Palette randomCanopyPalette, Set<BlockPos> leavePositions, Set<BlockPos> trunkPositions, int trunkLength) {

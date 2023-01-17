@@ -1,3 +1,6 @@
+## 1.0.0.10
+* Place leaves on trunks.
+
 ## 1.0.0.9
 * Fix canopy anchor pos.
 
