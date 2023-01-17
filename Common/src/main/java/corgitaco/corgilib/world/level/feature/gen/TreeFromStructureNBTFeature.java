@@ -98,7 +98,7 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
             if (canopyAnchor.size() > 1)  {
                 throw new IllegalArgumentException("There cannot be more than one central canopy position. Canopy central position is specified with yellow wool on the trunk palette.");
             }
-            placeCanopy(config, logProvider, leavesProvider, level, canopyAnchor.get(0).pos, random, placeSettings, randomCanopyPalette,  leavePositions, trunkPositions, trunkLength);
+            placeCanopy(config, logProvider, leavesProvider, level, getModifiedPos(placeSettings, canopyAnchor.get(0), centerOffset, origin), random, placeSettings, randomCanopyPalette,  leavePositions, trunkPositions, trunkLength);
         } else {
             placeCanopy(config, logProvider, leavesProvider, level, origin, random, placeSettings, randomCanopyPalette, leavePositions, trunkPositions, trunkLength);
         }

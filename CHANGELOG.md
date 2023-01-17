@@ -1,3 +1,6 @@
+## 1.0.0.9
+* Fix canopy anchor pos.
+
 ## 1.0.0.8
 * Add the ability to use yellow wool to anchor canopies from trunks.
 
