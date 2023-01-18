@@ -4,9 +4,11 @@
   "package": "corgitaco.corgilib.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "MixinEntity"
+    "MixinEntity",
+    "MixinStructureBlock"
   ],
   "client": [
+    "MixinMouseHandler"
   ],
   "server": [
   ],

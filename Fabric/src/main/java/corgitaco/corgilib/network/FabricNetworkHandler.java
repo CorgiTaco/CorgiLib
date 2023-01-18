@@ -44,9 +44,9 @@ public class FabricNetworkHandler {
 
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
             ClientProxy.registerClientReceiver(id, decode, handler);
-        } else {
-            ServerProxy.registerServerReceiver(id, decode, handler);
         }
+        ServerProxy.registerServerReceiver(id, decode, handler);
+
     }
 
 
