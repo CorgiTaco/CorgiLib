@@ -1,3 +1,6 @@
+## 1.0.0.12
+* Fix StructureBoxEditor
+
 ## 1.0.0.11
 * Add ability to edit structure boxes with a golden axe. Use LEFT_CTRL + SCROLL_WHEEL when to move the box in that direction, use LEFT_SHIFT + SCROLL_WHEEL to inflate the box in that direction.
 

@@ -8,7 +8,7 @@
     "MixinStructureBlock"
   ],
   "client": [
-    "MixinMouseHandler"
+    "client.MixinMouseHandler"
   ],
   "server": [
   ],

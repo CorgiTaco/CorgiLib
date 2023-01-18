@@ -1,4 +1,4 @@
-package corgitaco.corgilib.mixin;
+package corgitaco.corgilib.mixin.client;
 
 import corgitaco.corgilib.client.StructureBoxEditor;
 import net.minecraft.client.MouseHandler;

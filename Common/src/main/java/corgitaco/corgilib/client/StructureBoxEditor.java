@@ -1,10 +1,14 @@
 package corgitaco.corgilib.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import corgitaco.corgilib.network.UpdateStructureBoxPacketC2S;
 import corgitaco.corgilib.platform.ModPlatform;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -19,6 +23,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.Shapes;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -30,6 +35,15 @@ public class StructureBoxEditor {
 
     public static BlockPos structureBlockPos;
     public static BlockPos structureOffset;
+
+
+    public static void render(PoseStack stack, VertexConsumer consumer, double camX, double camY, double camZ) {
+        if (structureBox != null && structureBlockPos != null && structureOffset != null) {
+            AABB aabb = structureBox.move(structureOffset).move(structureBlockPos);
+
+            LevelRenderer.renderVoxelShape(stack, consumer, Shapes.create(aabb), -camX, -camY - 1, -camZ, 1, 0, 0, 0);
+        }
+    }
 
 
     public static boolean onScroll(double scrollValue) {
@@ -47,14 +61,14 @@ public class StructureBoxEditor {
                     return false;
                 }
 
-                Vec3 eyePosition = player.getEyePosition();
+                Vec3 eyePosition = player.getEyePosition().add(0, 1, 0);
 
                 Vec3 viewVector = player.getViewVector(0);
 
                 int distance = 250;
                 Vec3 add = eyePosition.add(viewVector.x * distance, viewVector.y * distance, viewVector.z * distance);
 
-                BlockHitResult clip = AABB.clip(Collections.singleton(structureBox.move(structureOffset).move(structureBlockPos).inflate(3)), eyePosition, add, BlockPos.ZERO);
+                BlockHitResult clip = AABB.clip(Collections.singleton(structureBox.move(structureOffset).move(structureBlockPos)), eyePosition, add, BlockPos.ZERO);
 
                 if (clip != null && clip.getType() != HitResult.Type.MISS) {
                     Direction opposite = clip.getDirection().getOpposite();
@@ -62,7 +76,7 @@ public class StructureBoxEditor {
                     double yStep = opposite.getStepY() * scrollValue;
                     double zStep = opposite.getStepZ() * scrollValue;
                     if (isKeyDown(Minecraft.getInstance(), GLFW.GLFW_KEY_LEFT_SHIFT)) {
-                        structureBox = structureBox.inflate(xStep, yStep, zStep);
+                        structureBox = new AABB(structureBox.minX, structureBox.minY, structureBox.minZ, Math.max(structureBox.minX + 1, structureBox.maxX + xStep), Math.max(structureBox.minY + 1, structureBox.maxY + yStep), Math.max(structureBox.minZ + 1, structureBox.maxZ + zStep));
                         ModPlatform.PLATFORM.sendToServer(new UpdateStructureBoxPacketC2S(structureBlockPos, structureOffset, new BoundingBox((int) structureBox.minX, (int) structureBox.minY, (int) structureBox.minZ, (int) structureBox.maxX, (int) structureBox.maxY, (int) structureBox.maxZ)));
                         return true;
                     }
