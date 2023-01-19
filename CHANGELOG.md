@@ -1,3 +1,7 @@
+## 1.0.0.14
+* Get logs from the trunk palette correctly.
+* Store leaves & log targets in a ObjectOpenHashSet in `TreeFromStructureNBTFeature`.
+
 ## 1.0.0.13
 * Add the ability to have several leaves & log targets in `TreeFromStructureNBTFeature`.
 

@@ -71,7 +71,7 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
         centerOffset = new BlockPos(-centerOffset.getX(), 0, -centerOffset.getZ());
 
 
-        List<StructureTemplate.StructureBlockInfo> logs = getStructureInfosInStructurePalletteFromBlockList(config.logTarget(), randomCanopyPalette);
+        List<StructureTemplate.StructureBlockInfo> logs = getStructureInfosInStructurePalletteFromBlockList(config.logTarget(), trunkBasePalette);
         List<StructureTemplate.StructureBlockInfo> logBuilders = trunkBasePalette.blocks(Blocks.RED_WOOL);
         if (logBuilders.isEmpty()) {
             throw new UnsupportedOperationException(String.format("\"%s\" is missing log builders.", baseLocation));
@@ -248,7 +248,7 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
         return new IllegalArgumentException(String.format("\"%s\" is not a valid tree part.", location));
     }
 
-    public static List<StructureTemplate.StructureBlockInfo> getStructureInfosInStructurePalletteFromBlockList(List<Block> blocks, StructureTemplate.Palette palette) {
+    public static List<StructureTemplate.StructureBlockInfo> getStructureInfosInStructurePalletteFromBlockList(Iterable<Block> blocks, StructureTemplate.Palette palette) {
         List<StructureTemplate.StructureBlockInfo> result = new ArrayList<>();
         for (Block block : blocks) {
            result.addAll(palette.blocks(block));
