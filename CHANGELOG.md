@@ -1,3 +1,6 @@
+## 1.0.0.13
+* Add the ability to have several leaves & log targets in `TreeFromStructureNBTFeature`.
+
 ## 1.0.0.12
 * Fix StructureBoxEditor
 

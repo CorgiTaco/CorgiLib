@@ -14,15 +14,23 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvi
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
 
 public record TreeFromStructureNBTConfig(ResourceLocation baseLocation, ResourceLocation canopyLocation,
                                          IntProvider height, BlockStateProvider logProvider,
-                                         BlockStateProvider leavesProvider, Block logTarget,
-                                         Block leavesTarget, TagKey<Block> growableOn,
+                                         BlockStateProvider leavesProvider, List<Block> logTarget,
+                                         List<Block> leavesTarget, TagKey<Block> growableOn,
                                          int maxLogDepth,
                                          List<TreeDecorator> treeDecorators) implements FeatureConfiguration {
+
+    public TreeFromStructureNBTConfig(ResourceLocation baseLocation, ResourceLocation canopyLocation,
+                                      IntProvider height, BlockStateProvider logProvider,
+                                      BlockStateProvider leavesProvider, Block logTarget,
+                                      Block leavesTarget, TagKey<Block> growableOn, int maxLogDepth, List<TreeDecorator> treeDecorators) {
+        this(baseLocation, canopyLocation, height, logProvider, leavesProvider, Collections.singletonList(logTarget), Collections.singletonList(leavesTarget), growableOn, maxLogDepth, treeDecorators);
+    }
 
     public TreeFromStructureNBTConfig(ResourceLocation baseLocation, ResourceLocation canopyLocation,
                                       IntProvider height, BlockStateProvider logProvider,
@@ -38,8 +46,8 @@ public record TreeFromStructureNBTConfig(ResourceLocation baseLocation, Resource
                     IntProvider.CODEC.fieldOf("height").forGetter(TreeFromStructureNBTConfig::height),
                     BlockStateProvider.CODEC.fieldOf("log_provider").forGetter(TreeFromStructureNBTConfig::logProvider),
                     BlockStateProvider.CODEC.fieldOf("leaves_provider").forGetter(TreeFromStructureNBTConfig::leavesProvider),
-                    CodecUtil.BLOCK_CODEC.fieldOf("log_target").forGetter(TreeFromStructureNBTConfig::logTarget),
-                    CodecUtil.BLOCK_CODEC.fieldOf("leaves_target").forGetter(TreeFromStructureNBTConfig::leavesTarget),
+                    CodecUtil.BLOCK_CODEC.listOf().fieldOf("log_target").forGetter(TreeFromStructureNBTConfig::logTarget),
+                    CodecUtil.BLOCK_CODEC.listOf().fieldOf("leaves_target").forGetter(TreeFromStructureNBTConfig::leavesTarget),
                     TagKey.hashedCodec(Registry.BLOCK_REGISTRY).optionalFieldOf("growable_on", BlockTags.DIRT).forGetter(TreeFromStructureNBTConfig::growableOn),
                     Codec.INT.optionalFieldOf("max_log_depth", 5).forGetter(TreeFromStructureNBTConfig::maxLogDepth),
                     TreeDecorator.CODEC.listOf().optionalFieldOf("decorators", new ArrayList<>()).forGetter(TreeFromStructureNBTConfig::treeDecorators)
