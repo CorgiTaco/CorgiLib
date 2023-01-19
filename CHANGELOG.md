@@ -1,3 +1,6 @@
+## 1.0.0.16
+* Invert check for ground when filling logs under for trees.
+
 ## 1.0.0.15
 * Use BlockPredicates to determine whether we've hit ground and to determine whether leaves can place at a position.
 

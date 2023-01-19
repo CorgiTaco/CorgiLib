@@ -185,7 +185,7 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
 
             for (int i = 0; i < maxTrunkBuildingDepth; i++) {
                 BlockState blockState = level.getBlockState(mutableBlockPos);
-                if (groundFilter.test(level, mutableBlockPos)) {
+                if (!groundFilter.test(level, mutableBlockPos)) {
                     level.setBlock(mutableBlockPos, logProvider.getState(randomSource, mutableBlockPos), 2);
                     mutableBlockPos.move(Direction.DOWN);
                 } else {
