@@ -1,3 +1,6 @@
+## 1.0.0.15
+* Use BlockPredicates to determine whether we've hit ground and to determine whether leaves can place at a position.
+
 ## 1.0.0.14
 * Get logs from the trunk palette correctly.
 * Store leaves & log targets in a ObjectOpenHashSet in `TreeFromStructureNBTFeature`.
