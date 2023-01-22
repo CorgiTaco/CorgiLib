@@ -19,6 +19,7 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
+import net.minecraft.world.ticks.TickPriority;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -96,10 +97,10 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
         List<StructureTemplate.StructureBlockInfo> canopyAnchor = trunkBasePalette.blocks(Blocks.YELLOW_WOOL);
 
         if (!canopyAnchor.isEmpty()) {
-            if (canopyAnchor.size() > 1)  {
+            if (canopyAnchor.size() > 1) {
                 throw new IllegalArgumentException("There cannot be more than one central canopy position. Canopy central position is specified with yellow wool on the trunk palette.");
             }
-            placeCanopy(config, logProvider, leavesProvider, level, getModifiedPos(placeSettings, canopyAnchor.get(0), centerOffset, origin), random, placeSettings, randomCanopyPalette,  leavePositions, trunkPositions, trunkLength, config.growableOn());
+            placeCanopy(config, logProvider, leavesProvider, level, getModifiedPos(placeSettings, canopyAnchor.get(0), centerOffset, origin), random, placeSettings, randomCanopyPalette, leavePositions, trunkPositions, trunkLength, config.growableOn());
         } else {
             placeCanopy(config, logProvider, leavesProvider, level, origin, random, placeSettings, randomCanopyPalette, leavePositions, trunkPositions, trunkLength, config.growableOn());
         }
@@ -190,7 +191,7 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
                     mutableBlockPos.move(Direction.DOWN);
                 } else {
                     Block block = blockState.getBlock();
-                    level.scheduleTick(mutableBlockPos, block, 0);
+                    level.scheduleTick(mutableBlockPos.immutable(), block, 1, TickPriority.EXTREMELY_HIGH);
                     break;
                 }
             }
@@ -250,7 +251,7 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
     public static List<StructureTemplate.StructureBlockInfo> getStructureInfosInStructurePalletteFromBlockList(Iterable<Block> blocks, StructureTemplate.Palette palette) {
         List<StructureTemplate.StructureBlockInfo> result = new ArrayList<>();
         for (Block block : blocks) {
-           result.addAll(palette.blocks(block));
+            result.addAll(palette.blocks(block));
         }
         return result;
     }

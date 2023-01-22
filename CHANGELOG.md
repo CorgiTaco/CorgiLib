@@ -1,3 +1,6 @@
+## 1.0.0.17
+* Try and fix ticking dirt blocks under filled logs.
+
 ## 1.0.0.16
 * Invert check for ground when filling logs under for trees.
 
