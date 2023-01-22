@@ -38,7 +38,7 @@ public class MixinChunkSerializer {
     }
 
 
-    @Inject(method = "read", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "read", at = @At("RETURN"))
     private static void readScheduledRandomTicks(ServerLevel serverLevel, PoiManager poiManager, ChunkPos pos, CompoundTag tag, CallbackInfoReturnable<ProtoChunk> cir) {
         if (tag.contains("corgilib_scheduled_ticks")) {
             for (Tag scheduledTick : tag.getList("corgilib_scheduled_random_ticks", Tag.TAG_COMPOUND)) {

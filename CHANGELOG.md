@@ -1,3 +1,6 @@
+## 1.0.0.20
+* Actually add scheduled random ticks to `LevelChunk` from `ProtoChunk`
+
 ## 1.0.0.19
 * Don't random tick in `LevelChunk` constructor.
 
