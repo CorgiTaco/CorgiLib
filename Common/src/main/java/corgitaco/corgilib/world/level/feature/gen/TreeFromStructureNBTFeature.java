@@ -1,6 +1,7 @@
 package corgitaco.corgilib.world.level.feature.gen;
 
 import com.mojang.serialization.Codec;
+import corgitaco.corgilib.world.level.RandomTickScheduler;
 import corgitaco.corgilib.world.level.feature.gen.configurations.TreeFromStructureNBTConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -185,13 +186,11 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
             BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos().set(pos);
 
             for (int i = 0; i < maxTrunkBuildingDepth; i++) {
-                BlockState blockState = level.getBlockState(mutableBlockPos);
                 if (!groundFilter.test(level, mutableBlockPos)) {
                     level.setBlock(mutableBlockPos, logProvider.getState(randomSource, mutableBlockPos), 2);
                     mutableBlockPos.move(Direction.DOWN);
                 } else {
-                    Block block = blockState.getBlock();
-                    level.scheduleTick(mutableBlockPos.immutable(), block, 1, TickPriority.EXTREMELY_HIGH);
+                    ((RandomTickScheduler) level.getChunk(mutableBlockPos)).scheduleRandomTick(mutableBlockPos.immutable());
                     break;
                 }
             }

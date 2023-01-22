@@ -1,3 +1,6 @@
+## 1.0.0.18
+* Add schedule random ticks system to update grass blocks under logs.
+
 ## 1.0.0.17
 * Try and fix ticking dirt blocks under filled logs.
 
