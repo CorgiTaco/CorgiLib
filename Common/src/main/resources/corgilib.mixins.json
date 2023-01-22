@@ -8,8 +8,7 @@
     "MixinServerLevel",
     "MixinStructureBlock",
     "chunk.MixinChunkAccess",
-    "chunk.MixinChunkSerializer",
-    "chunk.MixinLevelChunk"
+    "chunk.MixinChunkSerializer"
   ],
   "client": [
     "client.MixinMouseHandler"

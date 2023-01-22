@@ -1,3 +1,6 @@
+## 1.0.0.19
+* Don't random tick in `LevelChunk` constructor.
+
 ## 1.0.0.18
 * Add schedule random ticks system to update grass blocks under logs.
 
