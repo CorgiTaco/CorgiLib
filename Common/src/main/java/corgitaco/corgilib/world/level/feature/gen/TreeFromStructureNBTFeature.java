@@ -20,6 +20,8 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.ticks.TickPriority;
 import org.jetbrains.annotations.NotNull;
 
@@ -155,13 +157,19 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
         for (StructureTemplate.StructureBlockInfo leaf : leaves) {
             BlockPos pos = getModifiedPos(placeSettings, leaf, canopyCenterOffset, origin);
 
-            BlockState state = leavesProvider.getState(random, pos);
-
-            if (state.hasProperty(LeavesBlock.DISTANCE) && leaf.state.hasProperty(LeavesBlock.DISTANCE)) {
-                state = state.setValue(LeavesBlock.DISTANCE, leaf.state.getValue(LeavesBlock.DISTANCE));
-            }
-
             if (leavesPlacementFilter.test(level, pos)) {
+                BlockState state = leavesProvider.getState(random, pos);
+
+                if (state.hasProperty(LeavesBlock.DISTANCE) && leaf.state.hasProperty(LeavesBlock.DISTANCE)) {
+                    state = state.setValue(LeavesBlock.DISTANCE, leaf.state.getValue(LeavesBlock.DISTANCE));
+                }
+                if (state.hasProperty(LeavesBlock.WATERLOGGED)) {
+                    FluidState fluidState = level.getFluidState(pos);
+                    if (fluidState.is(Fluids.WATER) && fluidState.getAmount() >= 7) {
+                        state.setValue(LeavesBlock.WATERLOGGED, true);
+                    }
+                }
+
                 level.setBlock(pos, state, 2);
                 BlockState finalState = state;
                 Runnable postProcess = () -> {

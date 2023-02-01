@@ -1,3 +1,6 @@
+## 1.0.0.21
+* Water log leaves placed in water by `TreeFromStructureNBTFeature`.
+
 ## 1.0.0.20
 * Actually add scheduled random ticks to `LevelChunk` from `ProtoChunk`
 
