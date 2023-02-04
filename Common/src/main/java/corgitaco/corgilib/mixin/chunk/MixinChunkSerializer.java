@@ -29,20 +29,27 @@ public class MixinChunkSerializer {
         List<BlockPos> scheduledRandomTicks = ((RandomTickScheduler) chunkAccess).getScheduledRandomTicks();
 
         if (!scheduledRandomTicks.isEmpty()) {
+            CompoundTag corgiLibTag = new CompoundTag();
+
             ListTag listTag = new ListTag();
             for (BlockPos scheduledRandomTick : scheduledRandomTicks) {
                 listTag.add(NbtUtils.writeBlockPos(scheduledRandomTick));
             }
-            tag.put("corgilib_scheduled_random_ticks", listTag);
+            corgiLibTag.put("scheduled_random_ticks", listTag);
+
+            tag.put("corgilib", corgiLibTag);
         }
     }
 
 
     @Inject(method = "read", at = @At("RETURN"))
     private static void readScheduledRandomTicks(ServerLevel serverLevel, PoiManager poiManager, ChunkPos pos, CompoundTag tag, CallbackInfoReturnable<ProtoChunk> cir) {
-        if (tag.contains("corgilib_scheduled_ticks")) {
-            for (Tag scheduledTick : tag.getList("corgilib_scheduled_random_ticks", Tag.TAG_COMPOUND)) {
-                ((RandomTickScheduler) cir.getReturnValue()).getScheduledRandomTicks().add(NbtUtils.readBlockPos((CompoundTag) scheduledTick));
+        if (tag.contains("corgilib")) {
+            CompoundTag corgiLibTag = tag.getCompound("corgilib");
+            if (corgiLibTag.contains("scheduled_random_ticks", Tag.TAG_LIST)) {
+                for (Tag scheduledTick : tag.getList("scheduled_random_ticks", Tag.TAG_COMPOUND)) {
+                    ((RandomTickScheduler) cir.getReturnValue()).getScheduledRandomTicks().add(NbtUtils.readBlockPos((CompoundTag) scheduledTick));
+                }
             }
         }
     }
