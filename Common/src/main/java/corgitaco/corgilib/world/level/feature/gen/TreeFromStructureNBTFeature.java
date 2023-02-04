@@ -155,31 +155,31 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
     public static void placeLeavesWithCalculatedDistanceAndRotation(BlockStateProvider leavesProvider, WorldGenLevel level, BlockPos origin, RandomSource random, StructurePlaceSettings placeSettings, List<StructureTemplate.StructureBlockInfo> leaves, Set<BlockPos> leavePositions, BlockPos canopyCenterOffset, BlockPredicate leavesPlacementFilter) {
         List<Runnable> leavesPostApply = new ArrayList<>(leaves.size());
         for (StructureTemplate.StructureBlockInfo leaf : leaves) {
-            BlockPos pos = getModifiedPos(placeSettings, leaf, canopyCenterOffset, origin);
+            BlockPos modifiedPos = getModifiedPos(placeSettings, leaf, canopyCenterOffset, origin);
 
-            if (leavesPlacementFilter.test(level, pos)) {
-                BlockState state = leavesProvider.getState(random, pos);
+            if (leavesPlacementFilter.test(level, modifiedPos)) {
+                BlockState state = leavesProvider.getState(random, modifiedPos);
 
                 if (state.hasProperty(LeavesBlock.DISTANCE) && leaf.state.hasProperty(LeavesBlock.DISTANCE)) {
                     state = state.setValue(LeavesBlock.DISTANCE, leaf.state.getValue(LeavesBlock.DISTANCE));
                 }
                 if (state.hasProperty(LeavesBlock.WATERLOGGED)) {
-                    FluidState fluidState = level.getFluidState(pos);
+                    FluidState fluidState = level.getFluidState(modifiedPos);
                     if (fluidState.is(Fluids.WATER) && fluidState.getAmount() >= 7) {
                         state.setValue(LeavesBlock.WATERLOGGED, true);
                     }
                 }
 
-                level.setBlock(pos, state, 2);
+                level.setBlock(modifiedPos, state, 2);
                 BlockState finalState = state;
                 Runnable postProcess = () -> {
-                    BlockState blockState = LeavesBlock.updateDistance(finalState, level, pos);
+                    BlockState blockState = LeavesBlock.updateDistance(finalState, level, modifiedPos);
                     if (blockState.getValue(LeavesBlock.DISTANCE) < LeavesBlock.DECAY_DISTANCE) {
-                        leavePositions.add(pos);
-                        level.setBlock(pos, blockState, 2);
-                        level.scheduleTick(pos, blockState.getBlock(), 0);
+                        leavePositions.add(modifiedPos);
+                        level.setBlock(modifiedPos, blockState, 2);
+                        level.scheduleTick(modifiedPos, blockState.getBlock(), 0);
                     } else {
-                        level.removeBlock(pos, false);
+                        level.removeBlock(modifiedPos, false);
                     }
                 };
                 leavesPostApply.add(postProcess);
@@ -231,15 +231,10 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
     }
 
     private static boolean isOnGround(int maxLogDepth, WorldGenLevel level, BlockPos pos, BlockPredicate growableOn) {
-        int oceanFloorHeight = level.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, pos.getX(), pos.getZ());
-        if (pos.getY() > oceanFloorHeight) {
-            return pos.getY() - oceanFloorHeight < maxLogDepth;
-        }
-
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos().set(pos);
         for (int logDepth = 0; logDepth < maxLogDepth; logDepth++) {
             mutableBlockPos.move(Direction.DOWN);
-            if (growableOn.test(level, pos)) {
+            if (growableOn.test(level, mutableBlockPos)) {
                 return true;
             }
         }

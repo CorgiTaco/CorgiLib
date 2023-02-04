@@ -1,3 +1,7 @@
+## 1.0.0.22
+* Use moving position when checking for ground instead of constantly checking the same position.
+* Don't use heightmap to determine if the trunk is on the ground.
+
 ## 1.0.0.21
 * Water log leaves placed in water by `TreeFromStructureNBTFeature`.
 
