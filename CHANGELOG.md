@@ -1,3 +1,6 @@
+## 1.0.0.24
+* Don't fill logs under for Yellow wool in `TreeFromStructureNBTFeature`.
+
 ## 1.0.0.23
 * Change chunk storage format to our own compound tag to easily isolate our chunk tag data.
 

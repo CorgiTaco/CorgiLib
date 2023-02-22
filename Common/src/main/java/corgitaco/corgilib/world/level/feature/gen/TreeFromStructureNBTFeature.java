@@ -129,7 +129,6 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
         canopyCenterOffset = new BlockPos(-canopyCenterOffset.getX(), trunkLength, -canopyCenterOffset.getZ());
 
         List<StructureTemplate.StructureBlockInfo> trunkFillers = new ArrayList<>(randomCanopyPalette.blocks(Blocks.RED_WOOL));
-        trunkFillers.addAll(randomCanopyPalette.blocks(Blocks.YELLOW_WOOL));
         fillLogsUnder(random, logProvider, level, origin, placeSettings, canopyCenterOffset, trunkFillers, level.getHeight(), groundFilter);
 
 
