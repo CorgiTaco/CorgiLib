@@ -1,3 +1,6 @@
+## 1.0.0.27
+* Fix additional blocks placed from NBT positions in `TreeFromStructureNBTFeature`. 
+
 ## 1.0.0.26
 * Only post process if the placed state has distance property in `TreeFromStructureNBTFeature`.
 
