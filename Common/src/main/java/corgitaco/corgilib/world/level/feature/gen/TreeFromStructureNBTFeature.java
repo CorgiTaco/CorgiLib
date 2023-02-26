@@ -183,17 +183,19 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
 
                 level.setBlock(modifiedPos, state, 2);
                 BlockState finalState = state;
-                Runnable postProcess = () -> {
-                    BlockState blockState = LeavesBlock.updateDistance(finalState, level, modifiedPos);
-                    if (blockState.getValue(LeavesBlock.DISTANCE) < LeavesBlock.DECAY_DISTANCE) {
-                        leavePositions.add(modifiedPos);
-                        level.setBlock(modifiedPos, blockState, 2);
-                        level.scheduleTick(modifiedPos, blockState.getBlock(), 0);
-                    } else {
-                        level.removeBlock(modifiedPos, false);
-                    }
-                };
-                leavesPostApply.add(postProcess);
+                if (state.hasProperty(LeavesBlock.DISTANCE)) {
+                    Runnable postProcess = () -> {
+                        BlockState blockState = LeavesBlock.updateDistance(finalState, level, modifiedPos);
+                        if (blockState.getValue(LeavesBlock.DISTANCE) < LeavesBlock.DECAY_DISTANCE) {
+                            leavePositions.add(modifiedPos);
+                            level.setBlock(modifiedPos, blockState, 2);
+                            level.scheduleTick(modifiedPos, blockState.getBlock(), 0);
+                        } else {
+                            level.removeBlock(modifiedPos, false);
+                        }
+                    };
+                    leavesPostApply.add(postProcess);
+                }
             }
         }
         leavesPostApply.forEach(Runnable::run);
