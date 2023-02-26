@@ -1,3 +1,6 @@
+## 1.0.0.29
+* Don't use replaceable check when filling logs, check if the block at the position cannot occlude instead in `TreeFromStructureNBTFeature`.
+
 ## 1.0.0.28
 * Don't use ground filter when filling logs, check if the block at the position is replaceable instead in `TreeFromStructureNBTFeature`.
 
