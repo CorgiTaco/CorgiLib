@@ -1,3 +1,6 @@
+## 1.0.0.25
+* Allow the ability to place additional blocks from the NBT in `TreeFromStructureNBTFeature`.
+
 ## 1.0.0.24
 * Don't fill logs under for Yellow wool in `TreeFromStructureNBTFeature`.
 

@@ -5,9 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corgitaco.corgilib.serialization.codec.CodecUtil;
 import corgitaco.corgilib.serialization.codec.CollectionCodec;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.block.Block;
@@ -25,7 +23,8 @@ public record TreeFromStructureNBTConfig(ResourceLocation baseLocation, Resource
                                          Set<Block> logTarget, Set<Block> leavesTarget,
                                          BlockPredicate growableOn, BlockPredicate leavesPlacementFilter,
                                          int maxLogDepth,
-                                         List<TreeDecorator> treeDecorators) implements FeatureConfiguration {
+                                         List<TreeDecorator> treeDecorators,
+                                         Set<Block> placeFromNBT) implements FeatureConfiguration {
 
     public static final CollectionCodec<Block, Set<Block>> BLOCK_SET_CODEC = new CollectionCodec<>(CodecUtil.BLOCK_CODEC, ObjectOpenHashSet::new);
 
@@ -41,7 +40,8 @@ public record TreeFromStructureNBTConfig(ResourceLocation baseLocation, Resource
                     BlockPredicate.CODEC.fieldOf("can_grow_on_filter").forGetter(TreeFromStructureNBTConfig::growableOn),
                     BlockPredicate.CODEC.fieldOf("can_leaves_place_filter").forGetter(TreeFromStructureNBTConfig::leavesPlacementFilter),
                     Codec.INT.optionalFieldOf("max_log_depth", 5).forGetter(TreeFromStructureNBTConfig::maxLogDepth),
-                    TreeDecorator.CODEC.listOf().optionalFieldOf("decorators", new ArrayList<>()).forGetter(TreeFromStructureNBTConfig::treeDecorators)
+                    TreeDecorator.CODEC.listOf().optionalFieldOf("decorators", new ArrayList<>()).forGetter(TreeFromStructureNBTConfig::treeDecorators),
+                    BLOCK_SET_CODEC.fieldOf("place_from_nbt").forGetter(TreeFromStructureNBTConfig::placeFromNBT)
             ).apply(builder, TreeFromStructureNBTConfig::new)
     );
 
@@ -49,14 +49,14 @@ public record TreeFromStructureNBTConfig(ResourceLocation baseLocation, Resource
                                       IntProvider height, BlockStateProvider logProvider,
                                       BlockStateProvider leavesProvider, Collection<Block> logTarget,
                                       List<Block> leavesTarget, TagKey<Block> growableOn, int maxLogDepth, List<TreeDecorator> treeDecorators) {
-        this(baseLocation, canopyLocation, height, logProvider, leavesProvider, new ObjectOpenHashSet<>(logTarget), new ObjectOpenHashSet<>(leavesTarget), BlockPredicate.matchesTag(growableOn), BlockPredicate.replaceable(), maxLogDepth, treeDecorators);
+        this(baseLocation, canopyLocation, height, logProvider, leavesProvider, new ObjectOpenHashSet<>(logTarget), new ObjectOpenHashSet<>(leavesTarget), BlockPredicate.matchesTag(growableOn), BlockPredicate.replaceable(), maxLogDepth, treeDecorators, Set.of());
     }
 
     public TreeFromStructureNBTConfig(ResourceLocation baseLocation, ResourceLocation canopyLocation,
                                       IntProvider height, BlockStateProvider logProvider,
                                       BlockStateProvider leavesProvider, Block logTarget,
                                       Block leavesTarget, TagKey<Block> growableOn, int maxLogDepth, List<TreeDecorator> treeDecorators) {
-        this(baseLocation, canopyLocation, height, logProvider, leavesProvider, Collections.singleton(logTarget), Collections.singleton(leavesTarget), BlockPredicate.matchesTag(growableOn), BlockPredicate.replaceable(), maxLogDepth, treeDecorators);
+        this(baseLocation, canopyLocation, height, logProvider, leavesProvider, Collections.singleton(logTarget), Collections.singleton(leavesTarget), BlockPredicate.matchesTag(growableOn), BlockPredicate.replaceable(), maxLogDepth, treeDecorators, Set.of());
     }
 
     public TreeFromStructureNBTConfig(ResourceLocation baseLocation, ResourceLocation canopyLocation,
