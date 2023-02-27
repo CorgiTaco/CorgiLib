@@ -1,3 +1,6 @@
+## 1.0.0.30
+* Add to leave positions even if the leaves in question do not have a distance state property in `TreeFromStructureNBTFeature`.
+
 ## 1.0.0.29
 * Don't use replaceable check when filling logs, check if the block at the position cannot occlude instead in `TreeFromStructureNBTFeature`.
 

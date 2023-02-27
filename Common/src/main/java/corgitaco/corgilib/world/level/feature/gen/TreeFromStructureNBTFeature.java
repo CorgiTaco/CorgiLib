@@ -191,6 +191,8 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
                         }
                     };
                     leavesPostApply.add(postProcess);
+                } else {
+                    leavePositions.add(modifiedPos);
                 }
             }
         }
