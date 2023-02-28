@@ -67,9 +67,14 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
         StructureTemplate.Palette randomCanopyPalette = placeSettings.getRandomPalette(canopyPalettes, origin);
 
         List<StructureTemplate.StructureBlockInfo> center = trunkBasePalette.blocks(Blocks.WHITE_WOOL);
-        if (center.size() > 1) {
-            throw new IllegalArgumentException("There cannot be more than one central position. Central position is specified with white wool.");
+
+        if (center.isEmpty()) {
+            throw new IllegalArgumentException("No trunk central position was specified for structure NBT palette %s. Trunk central position is specified with white wool.".formatted(config.baseLocation()));
         }
+        if (center.size() > 1) {
+            throw new IllegalArgumentException("There cannot be more than one trunk central position for structure NBT palette %s. Trunk central position is specified with white wool.".formatted(config.baseLocation()));
+        }
+
         BlockPos centerOffset = center.get(0).pos;
         centerOffset = new BlockPos(-centerOffset.getX(), 0, -centerOffset.getZ());
 
@@ -130,6 +135,13 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
         List<StructureTemplate.StructureBlockInfo> leaves = getStructureInfosInStructurePalletteFromBlockList(config.leavesTarget(), randomCanopyPalette);
         List<StructureTemplate.StructureBlockInfo> canopyLogs = getStructureInfosInStructurePalletteFromBlockList(config.logTarget(), randomCanopyPalette);
         List<StructureTemplate.StructureBlockInfo> canopyAnchor = randomCanopyPalette.blocks(Blocks.WHITE_WOOL);
+
+        if (canopyAnchor.isEmpty()) {
+            throw new IllegalArgumentException("No canopy anchor was specified for structure NBT palette %s. Canopy anchor is specified with white wool.".formatted(config.canopyLocation()));
+        }
+        if (canopyAnchor.size() > 1) {
+            throw new IllegalArgumentException("There cannot be more than one canopy anchor for structure NBT palette %s. Canopy anchor is specified with white wool.".formatted(config.canopyLocation()));
+        }
 
         StructureTemplate.StructureBlockInfo structureBlockInfo = canopyAnchor.get(0);
         BlockPos canopyCenterOffset = structureBlockInfo.pos;

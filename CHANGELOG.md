@@ -1,3 +1,6 @@
+## 1.0.0.31
+* Better checks and exceptions for `TreeFromStructureNBTFeature`.
+
 ## 1.0.0.30
 * Add to leave positions even if the leaves in question do not have a distance state property in `TreeFromStructureNBTFeature`.
 
