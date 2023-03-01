@@ -1,3 +1,6 @@
+## 1.0.0.32
+* Use delegate's `listBuilder` & `mapBuilder` in `FromFileOps`.
+
 ## 1.0.0.31
 * Better checks and exceptions for `TreeFromStructureNBTFeature`.
 

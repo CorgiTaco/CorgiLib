@@ -2,6 +2,8 @@ package corgitaco.corgilib.serialization.codec;
 
 
 import com.mojang.serialization.DynamicOps;
+import com.mojang.serialization.ListBuilder;
+import com.mojang.serialization.RecordBuilder;
 import net.minecraft.resources.DelegatingOps;
 
 import java.util.HashMap;
@@ -17,6 +19,15 @@ public class FromFileOps<T> extends DelegatingOps<T> {
         this.access = access;
     }
 
+    @Override
+    public ListBuilder<T> listBuilder() {
+        return this.delegate.listBuilder();
+    }
+
+    @Override
+    public RecordBuilder<T> mapBuilder() {
+        return this.delegate.mapBuilder();
+    }
 
     public <E> Map<String, E> getAccess(String s) {
         return access.get(s);
