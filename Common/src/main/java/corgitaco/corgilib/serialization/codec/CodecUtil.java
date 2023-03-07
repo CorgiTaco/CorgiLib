@@ -147,4 +147,15 @@ public class CodecUtil {
 
     public record WrapForSerialization<T>(T value) {
     }
+
+    public record WeirdnessPair<T>(T normal, T variant) {
+        public static <T> Codec<WeirdnessPair<T>> codec(Codec<T> baseCodec) {
+            return RecordCodecBuilder.create(
+                    builder -> builder.group(
+                            baseCodec.fieldOf("normal").forGetter(pair -> pair.normal),
+                            baseCodec.fieldOf("variant").forGetter(pair -> pair.variant)
+                    ).apply(builder, WeirdnessPair::new)
+            );
+        }
+    }
 }
