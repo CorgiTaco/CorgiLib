@@ -1,0 +1,8 @@
+{
+    "corgilib.worldRegistryExport.exists": "A exportação da geração mundial já existe! Veja aqui: %s!",
+    "corgilib.worldRegistryExport.failed": "Uh oh, a exportação da geração mundial não pôde ser criada, verifique seu último.log!",
+    "corgilib.worldRegistryExport.singleplayer": "O comando de exportação da geração mundial deve ser usado no modo single player!",
+    "corgilib.worldRegistryExport.starting": "Iniciando a exportação da geração mundial, espere lag do servidor e alto uso de RAM...",
+    "corgilib.worldRegistryExport.success": "Exportação da geração mundial com sucesso! Veja os arquivos aqui: %s!",
+    "corgilib.clickevent.hovertext": "Clique para abrir!"
+}
