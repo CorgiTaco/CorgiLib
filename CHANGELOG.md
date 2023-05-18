@@ -1,3 +1,6 @@
+## 1.0.0.33
+* Clean up message when config reading fails.
+
 ## 1.0.0.32
 * Use delegate's `listBuilder` & `mapBuilder` in `FromFileOps`.
 
