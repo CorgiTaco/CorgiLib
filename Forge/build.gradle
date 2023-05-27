@@ -29,7 +29,7 @@ apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
-tasks.build.dependsOn(tasks.findByName("shadowJar"))
+tasks.build.dependsOn(shadowJar)
 
 configurations {
     shadow
@@ -166,10 +166,8 @@ processResources {
     exclude('data/fabric/tags/**')
 }
 
-jar.finalizedBy('reobfJar')
-
-
 jar {
+    finalizedBy('reobfJar')
     archiveClassifier.set('slim')
 }
 
