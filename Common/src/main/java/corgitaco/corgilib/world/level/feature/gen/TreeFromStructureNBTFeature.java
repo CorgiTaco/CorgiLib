@@ -6,7 +6,9 @@ import corgitaco.corgilib.world.level.feature.gen.configurations.TreeFromStructu
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
@@ -218,6 +220,9 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
 
             for (int i = 0; i < maxTrunkBuildingDepth; i++) {
                 if (!level.getBlockState(mutableBlockPos).canOcclude()) {
+                    if (level instanceof Level) { // Drop the replaced block.
+                        level.removeBlock(mutableBlockPos, true);
+                    }
                     level.setBlock(mutableBlockPos, logProvider.getState(randomSource, mutableBlockPos), 2);
                     mutableBlockPos.move(Direction.DOWN);
                 } else {
