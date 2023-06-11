@@ -11,6 +11,7 @@ import net.minecraft.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.Item;
@@ -91,8 +92,8 @@ public class VillagerTradeRegistry {
         map.put(VillagerTrades.TreasureMapForEmeralds.class, TREASURE_MAP_FOR_EMERALDS_CODEC);
     });
 
-    public static final Codec<VillagerTrades.ItemListing> ITEM_LISTING_CODEC = CorgiLibRegistry.VILLAGER_TRADES_ITEM_LISTING.byNameCodec()
-            .dispatchStable(itemListing -> ITEM_LISTING_CLASS_BY_CODEC.get(itemListing.getClass()), codec -> codec.fieldOf("config").codec());
+    public static final Codec<VillagerTrades.ItemListing> ITEM_LISTING_CODEC = ExtraCodecs.lazyInitializedCodec(() -> CorgiLibRegistry.VILLAGER_TRADES_ITEM_LISTING.get().byNameCodec()
+            .dispatchStable(itemListing -> ITEM_LISTING_CLASS_BY_CODEC.get(itemListing.getClass()), codec -> codec.fieldOf("config").codec()));
 
     public static void register() {
         final var provider = RegistrationProvider.get(CorgiLibRegistry.VILLAGER_TRADES_ITEM_LISTING_RESOURCE_KEY, CorgiLib.MOD_ID);

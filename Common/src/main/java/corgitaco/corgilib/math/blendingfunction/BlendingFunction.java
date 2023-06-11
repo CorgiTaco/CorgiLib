@@ -4,12 +4,14 @@ import com.mojang.serialization.Codec;
 import corgitaco.corgilib.CorgiLib;
 import corgitaco.corgilib.core.CorgiLibRegistry;
 import corgitaco.corgilib.reg.RegistrationProvider;
+import net.minecraft.util.ExtraCodecs;
 
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public interface BlendingFunction {
-    Codec<BlendingFunction> CODEC = CorgiLibRegistry.BLENDING_FUNCTION.byNameCodec().dispatchStable(BlendingFunction::codec, Function.identity());
-    RegistrationProvider<Codec<? extends BlendingFunction>> PROVIDER = RegistrationProvider.get(CorgiLibRegistry.BLENDING_FUNCTION, CorgiLib.MOD_ID);
+    Codec<BlendingFunction> CODEC = ExtraCodecs.lazyInitializedCodec(() -> CorgiLibRegistry.BLENDING_FUNCTION.get().byNameCodec().dispatchStable(BlendingFunction::codec, Function.identity()));
+    RegistrationProvider<Codec<? extends BlendingFunction>> PROVIDER = RegistrationProvider.get(CorgiLibRegistry.BLENDING_FUNCTION_RESOURCE_KEY, CorgiLib.MOD_ID);
 
     Codec<? extends BlendingFunction> codec();
 
