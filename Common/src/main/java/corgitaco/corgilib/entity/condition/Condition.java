@@ -3,13 +3,17 @@ package corgitaco.corgilib.entity.condition;
 import com.mojang.serialization.Codec;
 import corgitaco.corgilib.CorgiLib;
 import corgitaco.corgilib.core.CorgiLibRegistry;
+import corgitaco.corgilib.math.blendingfunction.BlendingFunction;
+import corgitaco.corgilib.reg.RegistrationProvider;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ExtraCodecs;
 
 import java.util.function.Function;
 
 public interface Condition {
-    Codec<Condition> CODEC = CorgiLibRegistry.CONDITION.byNameCodec().dispatchStable(Condition::codec, Function.identity());
+    Codec<Condition> CODEC = ExtraCodecs.lazyInitializedCodec(() ->  CorgiLibRegistry.CONDITION.get().byNameCodec().dispatchStable(Condition::codec, Function.identity()));
+    RegistrationProvider<Codec<? extends Condition>> PROVIDER = RegistrationProvider.get(CorgiLibRegistry.CONDITION_KEY, CorgiLib.MOD_ID);
 
     boolean passes(ConditionContext conditionContext);
 
@@ -49,6 +53,6 @@ public interface Condition {
     }
 
     static void register(String id, Codec<? extends Condition> codec) {
-        Registry.register(CorgiLibRegistry.CONDITION, new ResourceLocation(CorgiLib.MOD_ID, id), codec);
+        PROVIDER.register(id, () -> codec);
     }
 }
