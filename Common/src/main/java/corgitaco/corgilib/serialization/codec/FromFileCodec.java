@@ -20,9 +20,7 @@ public record FromFileCodec<E>(Codec<E> elementCodec, String internalKey) implem
             Map<String, E> registry = ops1.getAccess(this.internalKey);
             DataResult<Pair<String, T>> id = Codec.STRING.decode(ops, input);
             if (id.result().isEmpty()) {
-                return this.elementCodec.decode(ops, input).map(m -> m.mapFirst(e -> {
-                    return new Wrapped<>(Optional.empty(), e);
-                }));
+                return this.elementCodec.decode(ops, input).map(m -> m.mapFirst(e -> new Wrapped<>(Optional.empty(), e)));
             } else {
                 Pair<String, T> stringTPair = id.result().get();
                 String key = stringTPair.getFirst();

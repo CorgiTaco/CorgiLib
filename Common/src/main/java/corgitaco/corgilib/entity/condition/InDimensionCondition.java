@@ -12,10 +12,8 @@ import java.util.Set;
 
 public class InDimensionCondition implements Condition {
 
-    public static Codec<InDimensionCondition> CODEC = RecordCodecBuilder.create(builder -> {
-        return builder.group(Level.RESOURCE_KEY_CODEC.listOf().fieldOf("dimension_is").forGetter(inDimensionCondition -> new ArrayList<>(inDimensionCondition.validWorlds))
-        ).apply(builder, InDimensionCondition::new);
-    });
+    public static Codec<InDimensionCondition> CODEC = RecordCodecBuilder.create(builder -> builder.group(Level.RESOURCE_KEY_CODEC.listOf().fieldOf("dimension_is").forGetter(inDimensionCondition -> new ArrayList<>(inDimensionCondition.validWorlds))
+    ).apply(builder, InDimensionCondition::new));
     private final Set<ResourceKey<Level>> validWorlds;
 
     public InDimensionCondition(Collection<ResourceKey<Level>> validWorlds) {

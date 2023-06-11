@@ -8,9 +8,7 @@ import java.util.List;
 
 //TODO: Use vertical anchors in 1.18.
 public class YRangeCondition implements Condition {
-    public static final Codec<YRangeCondition> CODEC = RecordCodecBuilder.create(builder -> {
-        return builder.group(YRange.CODEC.listOf().fieldOf("y_range_is").forGetter(yRangeCondition -> yRangeCondition.yRanges), BlockPos.CODEC.optionalFieldOf("offset", BlockPos.ZERO).forGetter(yRangeCondition -> yRangeCondition.offset)).apply(builder, YRangeCondition::new);
-    });
+    public static final Codec<YRangeCondition> CODEC = RecordCodecBuilder.create(builder -> builder.group(YRange.CODEC.listOf().fieldOf("y_range_is").forGetter(yRangeCondition -> yRangeCondition.yRanges), BlockPos.CODEC.optionalFieldOf("offset", BlockPos.ZERO).forGetter(yRangeCondition -> yRangeCondition.offset)).apply(builder, YRangeCondition::new));
 
     private final List<YRange> yRanges;
     private final BlockPos offset;

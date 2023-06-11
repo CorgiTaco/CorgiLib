@@ -10,12 +10,10 @@ import java.util.Collection;
 
 public class EveryAmountOfDaysCondition implements Condition {
 
-    public static final Codec<EveryAmountOfDaysCondition> CODEC = RecordCodecBuilder.create(builder -> {
-        return builder.group(Codec.INT.listOf().fieldOf("amount_of_days").forGetter(everyAmountOfDaysCondition -> new ArrayList<>(everyAmountOfDaysCondition.amountOfDays)),
-                Codec.LONG.optionalFieldOf("day_length", 24000L).forGetter(everyAmountOfDaysCondition -> everyAmountOfDaysCondition.dayLength),
-                Codec.INT.optionalFieldOf("day_offset", 0).forGetter(everyAmountOfDaysCondition -> everyAmountOfDaysCondition.offset)
-        ).apply(builder, EveryAmountOfDaysCondition::new);
-    });
+    public static final Codec<EveryAmountOfDaysCondition> CODEC = RecordCodecBuilder.create(builder -> builder.group(Codec.INT.listOf().fieldOf("amount_of_days").forGetter(everyAmountOfDaysCondition -> new ArrayList<>(everyAmountOfDaysCondition.amountOfDays)),
+            Codec.LONG.optionalFieldOf("day_length", 24000L).forGetter(everyAmountOfDaysCondition -> everyAmountOfDaysCondition.dayLength),
+            Codec.INT.optionalFieldOf("day_offset", 0).forGetter(everyAmountOfDaysCondition -> everyAmountOfDaysCondition.offset)
+    ).apply(builder, EveryAmountOfDaysCondition::new));
 
     private final IntSet amountOfDays = new IntArraySet();
     private final int offset;

@@ -8,11 +8,9 @@ import java.util.List;
 
 public class TimeOfDayCondition implements Condition {
 
-    public static final Codec<TimeOfDayCondition> CODEC = RecordCodecBuilder.create(builder -> {
-        return builder.group(LongPair.createLongPairCodec("min_time", "max_time").listOf().fieldOf("times_of_day").forGetter(timeOfDayCondition -> timeOfDayCondition.timesOfDay),
-                Codec.LONG.optionalFieldOf("day_length", 24000L).forGetter(timeOfDayCondition -> timeOfDayCondition.dayLength)
-        ).apply(builder, TimeOfDayCondition::new);
-    });
+    public static final Codec<TimeOfDayCondition> CODEC = RecordCodecBuilder.create(builder -> builder.group(LongPair.createLongPairCodec("min_time", "max_time").listOf().fieldOf("times_of_day").forGetter(timeOfDayCondition -> timeOfDayCondition.timesOfDay),
+            Codec.LONG.optionalFieldOf("day_length", 24000L).forGetter(timeOfDayCondition -> timeOfDayCondition.dayLength)
+    ).apply(builder, TimeOfDayCondition::new));
 
     private final List<LongPair> timesOfDay;
     private final long dayLength;

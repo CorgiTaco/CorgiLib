@@ -6,9 +6,7 @@ import net.minecraft.core.BlockPos;
 
 public class SeeSkyAtCondition implements Condition {
 
-    public static Codec<SeeSkyAtCondition> CODEC = RecordCodecBuilder.create(builder -> {
-        return builder.group(BlockPos.CODEC.optionalFieldOf("offset", BlockPos.ZERO).forGetter(precipitationAtCondition -> precipitationAtCondition.offset)).apply(builder, SeeSkyAtCondition::new);
-    });
+    public static Codec<SeeSkyAtCondition> CODEC = RecordCodecBuilder.create(builder -> builder.group(BlockPos.CODEC.optionalFieldOf("offset", BlockPos.ZERO).forGetter(precipitationAtCondition -> precipitationAtCondition.offset)).apply(builder, SeeSkyAtCondition::new));
 
     private final BlockPos offset;
 

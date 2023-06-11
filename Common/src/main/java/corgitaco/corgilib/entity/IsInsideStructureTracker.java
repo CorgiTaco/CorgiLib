@@ -25,11 +25,9 @@ public class IsInsideStructureTracker {
 
     public static class IsInside {
 
-        public static final Codec<IsInside> CODEC = RecordCodecBuilder.create(builder -> {
-            return builder.group(Codec.BOOL.fieldOf("insideStructure").forGetter(isInside -> isInside.insideStructure),
-                    Codec.BOOL.fieldOf("insideStructurePiece").forGetter(isInside -> isInside.insideStructure)
-            ).apply(builder, IsInside::new);
-        });
+        public static final Codec<IsInside> CODEC = RecordCodecBuilder.create(builder -> builder.group(Codec.BOOL.fieldOf("insideStructure").forGetter(isInside -> isInside.insideStructure),
+                Codec.BOOL.fieldOf("insideStructurePiece").forGetter(isInside -> isInside.insideStructure)
+        ).apply(builder, IsInside::new));
 
         private boolean insideStructure;
         private boolean insideStructurePiece;

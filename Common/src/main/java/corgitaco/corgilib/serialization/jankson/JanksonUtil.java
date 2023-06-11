@@ -72,9 +72,7 @@ public class JanksonUtil {
                 TreeMap<String, JsonElement> map = new TreeMap<>(String::compareTo);
                 map.putAll(object);
                 alphabeticallySortedJsonObject.putAll(map);
-                alphabeticallySortedJsonObject.forEach((key, entry) -> {
-                    alphabeticallySortedJsonObject.setComment(key, object.getComment(key));
-                });
+                alphabeticallySortedJsonObject.forEach((key, entry) -> alphabeticallySortedJsonObject.setComment(key, object.getComment(key)));
 
                 return alphabeticallySortedJsonObject;
             }
@@ -121,7 +119,7 @@ public class JanksonUtil {
         }
     }
 
-    public static <T> T readConfig(Path path, Codec<T> codec, DynamicOps<JsonElement> ops) throws IOException, SyntaxError {
+    public static <T> T readConfig(Path path, Codec<T> codec, DynamicOps<JsonElement> ops) {
         JsonElement load = null;
 
         try {
@@ -146,7 +144,7 @@ public class JanksonUtil {
         try {
             return new String(Files.readAllBytes(path));
         } catch (IOException e) {
-            return String.format("Unable to read file bytes \"%s\" due to error(s):\n%s", path.toString(), e);
+            return String.format("Unable to read file bytes \"%s\" due to error(s):\n%s", path, e);
         }
     }
 }
