@@ -12,7 +12,7 @@
     "sources": "https://github.com/CorgiTaco/CorgiLib"
   },
   "license": "LGPLv3",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/corgilib/corgilib.png",
   "environment": "*",
   "entrypoints": {
     "main": [
