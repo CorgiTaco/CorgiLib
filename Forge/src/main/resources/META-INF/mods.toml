@@ -7,7 +7,7 @@ modId="corgilib"
 version="${file.jarVersion}" #mandatory
 displayName="CorgiLib" #mandatory
 displayURL="https://github.com/CorgiTaco/CorgiLib" #optional
-logoFile="corgilib.png" #optional
+logoFile="assets/corgilib/corgilib.png" #optional
 authors="Corgi Taco"
 description='''
 Library with handy utilities.
