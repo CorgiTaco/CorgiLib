@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corgitaco.corgilib.entity.IsInsideStructureTracker;
 import net.minecraft.core.*;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,7 +18,7 @@ import java.util.Optional;
 
 public class InsideStructureTagCondition implements Condition {
 
-    public static final Codec<InsideStructureTagCondition> CODEC = RecordCodecBuilder.create(builder -> builder.group(TagKey.codec(Registry.STRUCTURE_REGISTRY).listOf().fieldOf("structure_tag_is").forGetter(insideStructureTagCondition -> insideStructureTagCondition.structureTags),
+    public static final Codec<InsideStructureTagCondition> CODEC = RecordCodecBuilder.create(builder -> builder.group(TagKey.codec(Registries.STRUCTURE).listOf().fieldOf("structure_tag_is").forGetter(insideStructureTagCondition -> insideStructureTagCondition.structureTags),
             Codec.BOOL.optionalFieldOf("in_piece", false).forGetter(insideStructureTagCondition -> insideStructureTagCondition.intersectsPiece)
     ).apply(builder, InsideStructureTagCondition::new));
 
@@ -39,7 +40,7 @@ public class InsideStructureTagCondition implements Condition {
         if (world.isClientSide) {
             return clientPasses((IsInsideStructureTracker.Access) entity);
         } else {
-            Registry<Structure> configuredStructureFeatures = world.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY);
+            Registry<Structure> configuredStructureFeatures = world.registryAccess().registryOrThrow(Registries.STRUCTURE);
             for (TagKey<Structure> structureTag : structureTags) {
                 HolderSet.Named<Structure> tag = configuredStructureFeatures.getOrCreateTag(structureTag);
 

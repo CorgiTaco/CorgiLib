@@ -3,6 +3,7 @@ package corgitaco.corgilib.entity.condition;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 
@@ -10,7 +11,7 @@ public record EntityTypeTagFilter(TagKey<EntityType<?>> entityTypeTag) implement
 
     public static final Codec<EntityTypeTagFilter> CODEC = RecordCodecBuilder.create(builder ->
             builder.group(
-                    TagKey.hashedCodec(Registry.ENTITY_TYPE_REGISTRY).fieldOf("tag").forGetter(EntityTypeTagFilter::entityTypeTag)
+                    TagKey.hashedCodec(Registries.ENTITY_TYPE).fieldOf("tag").forGetter(EntityTypeTagFilter::entityTypeTag)
             ).apply(builder, EntityTypeTagFilter::new)
     );
 

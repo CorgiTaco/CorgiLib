@@ -1,6 +1,6 @@
 accessWidener v1 named
 
-Accessible class net/minecraft/core/Registry$RegistryBootstrap
+accessible class net/minecraft/core/registries/BuiltInRegistries$RegistryBootstrap
 
 Accessible class net/minecraft/world/entity/npc/VillagerTrades$DyedArmorForEmeralds
 Accessible class net/minecraft/world/entity/npc/VillagerTrades$EmeraldForItems
@@ -13,7 +13,7 @@ Accessible class net/minecraft/world/entity/npc/VillagerTrades$SuspiciousStewFor
 Accessible class net/minecraft/world/entity/npc/VillagerTrades$TippedArrowForItemsAndEmeralds
 Accessible class net/minecraft/world/entity/npc/VillagerTrades$TreasureMapForEmeralds
 
-Accessible method net/minecraft/core/Registry registerSimple (Lnet/minecraft/resources/ResourceKey;Lcom/mojang/serialization/Lifecycle;Lnet/minecraft/core/Registry$RegistryBootstrap;)Lnet/minecraft/core/Registry;
+accessible method net/minecraft/core/registries/BuiltInRegistries registerSimple (Lnet/minecraft/resources/ResourceKey;Lcom/mojang/serialization/Lifecycle;Lnet/minecraft/core/registries/BuiltInRegistries$RegistryBootstrap;)Lnet/minecraft/core/Registry;
 Accessible method net/minecraft/world/level/block/LeavesBlock updateDistance (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
 
 Accessible field net/minecraft/world/entity/npc/VillagerTrades$EmeraldForItems item Lnet/minecraft/world/item/Item;

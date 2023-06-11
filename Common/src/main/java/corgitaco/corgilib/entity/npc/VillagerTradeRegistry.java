@@ -8,7 +8,8 @@ import corgitaco.corgilib.core.CorgiLibRegistry;
 import corgitaco.corgilib.reg.RegistrationProvider;
 import corgitaco.corgilib.serialization.codec.CodecUtil;
 import net.minecraft.Util;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.npc.VillagerTrades;
@@ -21,8 +22,8 @@ import java.util.Map;
 
 public class VillagerTradeRegistry {
 
-    public static final Codec<Item> ITEM_CODEC = CodecUtil.createLoggedExceptionRegistryCodec(Registry.ITEM);
-    public static final Codec<MobEffect> MOB_EFFECT_CODEC = CodecUtil.createLoggedExceptionRegistryCodec(Registry.MOB_EFFECT);
+    public static final Codec<Item> ITEM_CODEC = CodecUtil.createLoggedExceptionRegistryCodec(BuiltInRegistries.ITEM);
+    public static final Codec<MobEffect> MOB_EFFECT_CODEC = CodecUtil.createLoggedExceptionRegistryCodec(BuiltInRegistries.MOB_EFFECT);
 
     private final static Codec<VillagerTrades.EmeraldForItems> EMERALD_FOR_ITEMS_CODEC = RecordCodecBuilder.create(builder ->
             builder.group(
@@ -74,7 +75,7 @@ public class VillagerTradeRegistry {
     private final static Codec<VillagerTrades.TreasureMapForEmeralds> TREASURE_MAP_FOR_EMERALDS_CODEC = RecordCodecBuilder.create(builder ->
             builder.group(
                     Codec.INT.fieldOf("emerald_cost").forGetter(listing -> listing.emeraldCost),
-                    TagKey.hashedCodec(Registry.STRUCTURE_REGISTRY).fieldOf("destination").forGetter(listing -> listing.destination),
+                    TagKey.hashedCodec(Registries.STRUCTURE).fieldOf("destination").forGetter(listing -> listing.destination),
                     Codec.STRING.fieldOf("display_name").forGetter(listing -> listing.displayName),
                     MAP_DECORATION_TYPE_CODEC.fieldOf("destination_type").forGetter(listing -> listing.destinationType),
                     Codec.INT.fieldOf("max_uses").forGetter(listing -> listing.maxUses),
