@@ -7,7 +7,6 @@ import corgitaco.corgilib.reg.RegistrationProvider;
 import net.minecraft.util.ExtraCodecs;
 
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public interface BlendingFunction {
     Codec<BlendingFunction> CODEC = ExtraCodecs.lazyInitializedCodec(() -> CorgiLibRegistry.BLENDING_FUNCTION.get().byNameCodec().dispatchStable(BlendingFunction::codec, Function.identity()));
