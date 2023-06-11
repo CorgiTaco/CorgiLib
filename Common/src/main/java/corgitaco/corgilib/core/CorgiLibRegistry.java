@@ -8,6 +8,7 @@ import corgitaco.corgilib.entity.npc.VillagerTradeRegistry;
 import corgitaco.corgilib.math.blendingfunction.BlendingFunction;
 import corgitaco.corgilib.world.level.feature.CorgiLibFeatures;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.npc.VillagerTrades;
@@ -16,15 +17,15 @@ public class CorgiLibRegistry {
 
     public static final ResourceKey<Registry<Codec<? extends BlendingFunction>>> BLENDING_FUNCTION_RESOURCE_KEY = ResourceKey.createRegistryKey(CorgiLib.createLocation("blending_function"));
 
-    public static final Registry<Codec<? extends BlendingFunction>> BLENDING_FUNCTION = Registry.registerSimple(BLENDING_FUNCTION_RESOURCE_KEY, Lifecycle.stable(), registry -> BlendingFunction.CODEC);
+    public static final Registry<Codec<? extends BlendingFunction>> BLENDING_FUNCTION = BuiltInRegistries.registerSimple(BLENDING_FUNCTION_RESOURCE_KEY, Lifecycle.stable(), registry -> BlendingFunction.CODEC);
 
     public static final ResourceKey<Registry<Codec<? extends VillagerTrades.ItemListing>>> VILLAGER_TRADES_ITEM_LISTING_RESOURCE_KEY = ResourceKey.createRegistryKey(CorgiLib.createLocation("villager_trades_item_listing"));
 
-    public static final Registry<Codec<? extends VillagerTrades.ItemListing>> VILLAGER_TRADES_ITEM_LISTING = Registry.registerSimple(VILLAGER_TRADES_ITEM_LISTING_RESOURCE_KEY, Lifecycle.stable(), registry -> VillagerTradeRegistry.ITEM_LISTING_CODEC);
+    public static final Registry<Codec<? extends VillagerTrades.ItemListing>> VILLAGER_TRADES_ITEM_LISTING = BuiltInRegistries.registerSimple(VILLAGER_TRADES_ITEM_LISTING_RESOURCE_KEY, Lifecycle.stable(), registry -> VillagerTradeRegistry.ITEM_LISTING_CODEC);
 
     public static final ResourceKey<Registry<Codec<? extends Condition>>> CONDITION_KEY = ResourceKey.createRegistryKey(new ResourceLocation(CorgiLib.MOD_ID, "condition"));
 
-    public static final Registry<Codec<? extends Condition>> CONDITION = Registry.registerSimple(CONDITION_KEY, Lifecycle.stable(), registry -> Condition.CODEC);
+    public static final Registry<Codec<? extends Condition>> CONDITION = BuiltInRegistries.registerSimple(CONDITION_KEY, Lifecycle.stable(), registry -> Condition.CODEC);
 
     public static void init() {
         BlendingFunction.register();

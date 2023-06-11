@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[40,)"
+loaderVersion="[44,)"
 license="LGPLv3"
 issueTrackerURL="https://github.com/CorgiTaco/CorgiLib/issues"
 [[mods]]
@@ -9,6 +9,7 @@ displayName="CorgiLib" #mandatory
 displayURL="https://github.com/CorgiTaco/CorgiLib" #optional
 logoFile="corgilib.png" #optional
 authors="Corgi Taco"
+credits="J.T. McQuigg (JT122406)"
 description='''
 Library with handy utilities.
 '''
@@ -19,7 +20,7 @@ Library with handy utilities.
     # Does this dependency have to exist - if not, ordering below must be specified
     mandatory=true #mandatory
     # The version range of the dependency
-    versionRange="[43,)" #mandatory
+    versionRange="[44,)" #mandatory
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
@@ -28,6 +29,6 @@ Library with handy utilities.
 [[dependencies.corgilib]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.2,)"
+    versionRange="[1.19.3,)"
     ordering="NONE"
     side="BOTH"

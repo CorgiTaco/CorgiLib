@@ -14,7 +14,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 public record JanksonJsonOps(boolean compressed) implements DynamicOps<JsonElement> {
     public static final JanksonJsonOps INSTANCE = new JanksonJsonOps(false);
@@ -168,7 +167,7 @@ public record JanksonJsonOps(boolean compressed) implements DynamicOps<JsonEleme
 
         final JsonObject output = new JsonObject();
         if (map != empty()) {
-            ((JsonObject) map).forEach((key1, value1) -> output.put(key1, value1));
+            output.putAll(((JsonObject) map));
         }
         output.put(((JsonPrimitive) key).asString(), value);
 
@@ -183,7 +182,7 @@ public record JanksonJsonOps(boolean compressed) implements DynamicOps<JsonEleme
 
         final JsonObject output = new JsonObject();
         if (map != empty()) {
-            ((JsonObject) map).forEach((key, value) -> output.put(key, value));
+            output.putAll(((JsonObject) map));
         }
 
         final List<JsonElement> missed = Lists.newArrayList();

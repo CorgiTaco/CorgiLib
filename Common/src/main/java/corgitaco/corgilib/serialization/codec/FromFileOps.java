@@ -5,6 +5,7 @@ import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.ListBuilder;
 import com.mojang.serialization.RecordBuilder;
 import net.minecraft.resources.DelegatingOps;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,12 +21,12 @@ public class FromFileOps<T> extends DelegatingOps<T> {
     }
 
     @Override
-    public ListBuilder<T> listBuilder() {
+    public @NotNull ListBuilder<T> listBuilder() {
         return this.delegate.listBuilder();
     }
 
     @Override
-    public RecordBuilder<T> mapBuilder() {
+    public @NotNull RecordBuilder<T> mapBuilder() {
         return this.delegate.mapBuilder();
     }
 

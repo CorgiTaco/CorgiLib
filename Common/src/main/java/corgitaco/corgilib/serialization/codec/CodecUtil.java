@@ -7,6 +7,8 @@ import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -27,18 +29,18 @@ import java.util.function.Supplier;
 
 public class CodecUtil {
 
-    public static final Codec<Block> BLOCK_CODEC = createLoggedExceptionRegistryCodec(Registry.BLOCK);
+    public static final Codec<Block> BLOCK_CODEC = createLoggedExceptionRegistryCodec(BuiltInRegistries.BLOCK);
 
-    public static final Codec<MobEffect> MOB_EFFECT = createLoggedExceptionRegistryCodec(Registry.MOB_EFFECT);
-    public static final Codec<EntityType<?>> ENTITY_TYPE = createLoggedExceptionRegistryCodec(Registry.ENTITY_TYPE);
+    public static final Codec<MobEffect> MOB_EFFECT = createLoggedExceptionRegistryCodec(BuiltInRegistries.MOB_EFFECT);
+    public static final Codec<EntityType<?>> ENTITY_TYPE = createLoggedExceptionRegistryCodec(BuiltInRegistries.ENTITY_TYPE);
 
-    public static final Codec<EntityType<?>> ENTITY_TYPE_CODEC = createLoggedExceptionRegistryCodec(Registry.ENTITY_TYPE);
-    public static final Codec<Attribute> ATTRIBUTE_CODEC = createLoggedExceptionRegistryCodec(Registry.ATTRIBUTE);
-    public static final Codec<Item> ITEM_CODEC = createLoggedExceptionRegistryCodec(Registry.ITEM);
-    public static final Codec<Enchantment> ENCHANTMENT_CODEC = createLoggedExceptionRegistryCodec(Registry.ENCHANTMENT);
-    public static final Codec<MobEffect> EFFECT_CODEC = createLoggedExceptionRegistryCodec(Registry.MOB_EFFECT);
+    public static final Codec<EntityType<?>> ENTITY_TYPE_CODEC = createLoggedExceptionRegistryCodec(BuiltInRegistries.ENTITY_TYPE);
+    public static final Codec<Attribute> ATTRIBUTE_CODEC = createLoggedExceptionRegistryCodec(BuiltInRegistries.ATTRIBUTE);
+    public static final Codec<Item> ITEM_CODEC = createLoggedExceptionRegistryCodec(BuiltInRegistries.ITEM);
+    public static final Codec<Enchantment> ENCHANTMENT_CODEC = createLoggedExceptionRegistryCodec(BuiltInRegistries.ENCHANTMENT);
+    public static final Codec<MobEffect> EFFECT_CODEC = createLoggedExceptionRegistryCodec(BuiltInRegistries.MOB_EFFECT);
 
-    public static final Codec<ResourceKey<Biome>> BIOME_CODEC = ResourceLocation.CODEC.comapFlatMap(resourceLocation -> DataResult.success(ResourceKey.create(Registry.BIOME_REGISTRY, resourceLocation)), ResourceKey::location);
+    public static final Codec<ResourceKey<Biome>> BIOME_CODEC = ResourceLocation.CODEC.comapFlatMap(resourceLocation -> DataResult.success(ResourceKey.create(Registries.BIOME, resourceLocation)), ResourceKey::location);
 
     public static final Codec<EquipmentSlot> EQUIPMENT_SLOT_CODEC = Codec.STRING.comapFlatMap(s -> {
         final EquipmentSlot equipmentSlotType = EquipmentSlot.byName(s.toLowerCase());

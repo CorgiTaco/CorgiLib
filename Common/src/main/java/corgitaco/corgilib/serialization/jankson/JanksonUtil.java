@@ -1,7 +1,6 @@
 package corgitaco.corgilib.serialization.jankson;
 
 import blue.endless.jankson.*;
-import blue.endless.jankson.api.SyntaxError;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
@@ -120,7 +119,7 @@ public class JanksonUtil {
     }
 
     public static <T> T readConfig(Path path, Codec<T> codec, DynamicOps<JsonElement> ops) {
-        JsonElement load = null;
+        JsonElement load;
 
         try {
             load = JANKSON.loadElement(configStringFromBytes(path).strip());
