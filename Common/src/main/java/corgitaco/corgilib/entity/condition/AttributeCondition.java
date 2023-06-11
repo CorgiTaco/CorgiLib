@@ -12,10 +12,8 @@ import java.util.Set;
 
 public class AttributeCondition implements Condition {
 
-    public static final Codec<AttributeCondition> CODEC = RecordCodecBuilder.create(builder -> {
-        return builder.group(Codec.unboundedMap(CodecUtil.ATTRIBUTE_CODEC, DoubleComparator.CODEC).fieldOf("attribute_is").forGetter(attributeCondition -> attributeCondition.attributeComparator)
-        ).apply(builder, AttributeCondition::new);
-    });
+    public static final Codec<AttributeCondition> CODEC = RecordCodecBuilder.create(builder -> builder.group(Codec.unboundedMap(CodecUtil.ATTRIBUTE_CODEC, DoubleComparator.CODEC).fieldOf("attribute_is").forGetter(attributeCondition -> attributeCondition.attributeComparator)
+    ).apply(builder, AttributeCondition::new));
     private final Map<Attribute, DoubleComparator> attributeComparator;
     private final Set<Map.Entry<Attribute, DoubleComparator>> entries;
 

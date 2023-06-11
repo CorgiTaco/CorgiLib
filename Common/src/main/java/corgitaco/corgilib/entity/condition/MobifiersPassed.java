@@ -6,12 +6,8 @@ import corgitaco.corgilib.comparator.DoubleComparator;
 
 public class MobifiersPassed implements Condition {
 
-    public static final Codec<MobifiersPassed> CODEC = RecordCodecBuilder.create(builder -> {
-        return builder.group(DoubleComparator.CODEC.fieldOf("mobifiers_passed_comparator").forGetter(mobifiersPassed -> {
-                    return mobifiersPassed.doubleComparator;
-                })
-        ).apply(builder, MobifiersPassed::new);
-    });
+    public static final Codec<MobifiersPassed> CODEC = RecordCodecBuilder.create(builder -> builder.group(DoubleComparator.CODEC.fieldOf("mobifiers_passed_comparator").forGetter(mobifiersPassed -> mobifiersPassed.doubleComparator)
+    ).apply(builder, MobifiersPassed::new));
 
     private final DoubleComparator doubleComparator;
 

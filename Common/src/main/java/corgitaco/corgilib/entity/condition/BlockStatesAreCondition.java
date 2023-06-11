@@ -44,10 +44,8 @@ public class BlockStatesAreCondition implements Condition {
     }
 
     public static class BlockStateIs {
-        public static final Codec<BlockStateIs> CODEC = RecordCodecBuilder.create(builder -> {
-            return builder.group(BlockPos.CODEC.optionalFieldOf("offset", BlockPos.ZERO).forGetter(blockStateIs -> blockStateIs.offset),
-                    BlockState.CODEC.listOf().fieldOf("is").forGetter(blockStateIs -> new ArrayList<>(blockStateIs.is))).apply(builder, BlockStateIs::new);
-        });
+        public static final Codec<BlockStateIs> CODEC = RecordCodecBuilder.create(builder -> builder.group(BlockPos.CODEC.optionalFieldOf("offset", BlockPos.ZERO).forGetter(blockStateIs -> blockStateIs.offset),
+                BlockState.CODEC.listOf().fieldOf("is").forGetter(blockStateIs -> new ArrayList<>(blockStateIs.is))).apply(builder, BlockStateIs::new));
 
         private final BlockPos offset;
         private final Set<BlockState> is;

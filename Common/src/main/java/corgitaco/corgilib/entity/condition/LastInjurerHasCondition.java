@@ -7,10 +7,8 @@ import net.minecraft.world.entity.LivingEntity;
 import java.util.List;
 
 public class LastInjurerHasCondition implements Condition {
-    public static Codec<LastInjurerHasCondition> CODEC = RecordCodecBuilder.create(builder -> {
-        return builder.group(Condition.CODEC.listOf().fieldOf("conditions_to_apply").forGetter(lastInjurerByTypeHasCondition -> lastInjurerByTypeHasCondition.injurerConditions)
-        ).apply(builder, LastInjurerHasCondition::new);
-    });
+    public static Codec<LastInjurerHasCondition> CODEC = RecordCodecBuilder.create(builder -> builder.group(Condition.CODEC.listOf().fieldOf("conditions_to_apply").forGetter(lastInjurerByTypeHasCondition -> lastInjurerByTypeHasCondition.injurerConditions)
+    ).apply(builder, LastInjurerHasCondition::new));
     private final List<Condition> injurerConditions;
 
     public LastInjurerHasCondition(List<Condition> injurerConditions) {

@@ -4,9 +4,7 @@ import com.mojang.serialization.Codec;
 
 public class IsDeadOrDyingCondition implements Condition {
     public static final IsDeadOrDyingCondition INSTANCE = new IsDeadOrDyingCondition();
-    public static final Codec<IsDeadOrDyingCondition> CODEC = Codec.unit(() -> {
-        return INSTANCE;
-    });
+    public static final Codec<IsDeadOrDyingCondition> CODEC = Codec.unit(() -> INSTANCE);
 
     @Override
     public boolean passes(ConditionContext conditionContext) {

@@ -17,11 +17,9 @@ import java.util.Optional;
 
 public class InsideStructureTagCondition implements Condition {
 
-    public static final Codec<InsideStructureTagCondition> CODEC = RecordCodecBuilder.create(builder -> {
-        return builder.group(TagKey.codec(Registry.STRUCTURE_REGISTRY).listOf().fieldOf("structure_tag_is").forGetter(insideStructureTagCondition -> insideStructureTagCondition.structureTags),
-                Codec.BOOL.optionalFieldOf("in_piece", false).forGetter(insideStructureTagCondition -> insideStructureTagCondition.intersectsPiece)
-        ).apply(builder, InsideStructureTagCondition::new);
-    });
+    public static final Codec<InsideStructureTagCondition> CODEC = RecordCodecBuilder.create(builder -> builder.group(TagKey.codec(Registry.STRUCTURE_REGISTRY).listOf().fieldOf("structure_tag_is").forGetter(insideStructureTagCondition -> insideStructureTagCondition.structureTags),
+            Codec.BOOL.optionalFieldOf("in_piece", false).forGetter(insideStructureTagCondition -> insideStructureTagCondition.intersectsPiece)
+    ).apply(builder, InsideStructureTagCondition::new));
 
     private final List<TagKey<Structure>> structureTags;
     private final boolean intersectsPiece;

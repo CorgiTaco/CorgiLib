@@ -14,9 +14,7 @@ import java.util.Set;
 
 public class BlocksAreCondition implements Condition {
 
-    public static final Codec<BlocksAreCondition> CODEC = RecordCodecBuilder.create(builder -> {
-        return builder.group(BlockIs.CODEC.listOf().fieldOf("has").forGetter(blockStatesAreCondition -> new ArrayList<>(blockStatesAreCondition.blockStatesAre))).apply(builder, BlocksAreCondition::new);
-    });
+    public static final Codec<BlocksAreCondition> CODEC = RecordCodecBuilder.create(builder -> builder.group(BlockIs.CODEC.listOf().fieldOf("has").forGetter(blockStatesAreCondition -> new ArrayList<>(blockStatesAreCondition.blockStatesAre))).apply(builder, BlocksAreCondition::new));
 
     private final Set<BlockIs> blockStatesAre;
 
@@ -43,10 +41,8 @@ public class BlocksAreCondition implements Condition {
     }
 
     public static class BlockIs {
-        public static final Codec<BlockIs> CODEC = RecordCodecBuilder.create(builder -> {
-            return builder.group(BlockPos.CODEC.optionalFieldOf("offset", BlockPos.ZERO).forGetter(blockIs -> blockIs.offset),
-                    CodecUtil.BLOCK_CODEC.listOf().fieldOf("is").forGetter(blockIs -> new ArrayList<>(blockIs.is))).apply(builder, BlockIs::new);
-        });
+        public static final Codec<BlockIs> CODEC = RecordCodecBuilder.create(builder -> builder.group(BlockPos.CODEC.optionalFieldOf("offset", BlockPos.ZERO).forGetter(blockIs -> blockIs.offset),
+                CodecUtil.BLOCK_CODEC.listOf().fieldOf("is").forGetter(blockIs -> new ArrayList<>(blockIs.is))).apply(builder, BlockIs::new));
 
         private final BlockPos offset;
         private final Set<Block> is;

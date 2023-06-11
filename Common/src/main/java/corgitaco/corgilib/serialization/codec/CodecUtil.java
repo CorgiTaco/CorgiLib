@@ -68,12 +68,10 @@ public class CodecUtil {
     }, ClickEvent.Action::name);
 
 
-    public static final Codec<ClickEvent> CLICK_EVENT_CODEC = RecordCodecBuilder.create((builder) -> {
-        return builder.group(
-                CLICK_EVENT_ACTION_CODEC.fieldOf("action").forGetter(ClickEvent::getAction),
-                Codec.STRING.fieldOf("value").forGetter((ClickEvent::getValue))
-        ).apply(builder, ClickEvent::new);
-    });
+    public static final Codec<ClickEvent> CLICK_EVENT_CODEC = RecordCodecBuilder.create((builder) -> builder.group(
+            CLICK_EVENT_ACTION_CODEC.fieldOf("action").forGetter(ClickEvent::getAction),
+            Codec.STRING.fieldOf("value").forGetter((ClickEvent::getValue))
+    ).apply(builder, ClickEvent::new));
 
     public static Function<String, DataResult<Integer>> validateColorHex() {
         return input -> {
@@ -127,7 +125,7 @@ public class CodecUtil {
                     registryElements.append(i).append(". \"").append(registry.getKey(object).toString()).append("\"\n");
                 }
 
-                return DataResult.error(String.format("\"%s\" is not a valid id in registry: %s.\nCurrent Registry Values:\n\n%s\n", location.toString(), registry.toString(), registryElements.toString()));
+                return DataResult.error(String.format("\"%s\" is not a valid id in registry: %s.\nCurrent Registry Values:\n\n%s\n", location.toString(), registry, registryElements));
             }
             return DataResult.success(result.get());
         }, registry::getKey);

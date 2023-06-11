@@ -14,12 +14,10 @@ import java.util.Optional;
 
 public class ItemStackCheck {
 
-    public static final Codec<ItemStackCheck> CODEC = RecordCodecBuilder.create(builder -> {
-        return builder.group(CodecUtil.ITEM_CODEC.fieldOf("item").forGetter(itemStackCheck -> itemStackCheck.item), DoubleComparator.CODEC.optionalFieldOf("durability_is").forGetter(itemStackCheck -> itemStackCheck.durabilityComparator),
-                        DoubleComparator.CODEC.optionalFieldOf("stack_size_is").forGetter(itemStackCheck -> itemStackCheck.stackSizeComparator),
-                        Codec.unboundedMap(CodecUtil.ENCHANTMENT_CODEC, DoubleComparator.CODEC).optionalFieldOf("enchantment_check").forGetter(itemStackCheck -> itemStackCheck.enchantmentLevelComparator))
-                .apply(builder, ItemStackCheck::new);
-    });
+    public static final Codec<ItemStackCheck> CODEC = RecordCodecBuilder.create(builder -> builder.group(CodecUtil.ITEM_CODEC.fieldOf("item").forGetter(itemStackCheck -> itemStackCheck.item), DoubleComparator.CODEC.optionalFieldOf("durability_is").forGetter(itemStackCheck -> itemStackCheck.durabilityComparator),
+                    DoubleComparator.CODEC.optionalFieldOf("stack_size_is").forGetter(itemStackCheck -> itemStackCheck.stackSizeComparator),
+                    Codec.unboundedMap(CodecUtil.ENCHANTMENT_CODEC, DoubleComparator.CODEC).optionalFieldOf("enchantment_check").forGetter(itemStackCheck -> itemStackCheck.enchantmentLevelComparator))
+            .apply(builder, ItemStackCheck::new));
 
     private final Item item;
     private final Optional<DoubleComparator> durabilityComparator;
@@ -28,7 +26,7 @@ public class ItemStackCheck {
 
     public ItemStackCheck(Item item, Optional<DoubleComparator> durabilityComparator, Optional<DoubleComparator> stackSizeComparator, Optional<Map<Enchantment, DoubleComparator>> enchantmentLevelComparator) {
         this.item = item;
-        if (!durabilityComparator.isPresent() && !stackSizeComparator.isPresent() && !enchantmentLevelComparator.isPresent()) {
+        if (durabilityComparator.isEmpty() && stackSizeComparator.isEmpty() && enchantmentLevelComparator.isEmpty()) {
             throw new IllegalArgumentException("We need at least one check in an Item Stack Check!");
         }
         this.durabilityComparator = durabilityComparator;

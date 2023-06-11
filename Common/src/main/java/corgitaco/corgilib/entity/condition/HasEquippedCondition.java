@@ -14,9 +14,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class HasEquippedCondition implements Condition {
-    public static final Codec<HasEquippedCondition> CODEC = RecordCodecBuilder.create(builder -> {
-        return builder.group(Codec.unboundedMap(CodecUtil.EQUIPMENT_SLOT_CODEC, ItemStackCheck.CODEC.listOf()).fieldOf("has_equipped").forGetter(hasEquippedCondition -> hasEquippedCondition.stackChecks)).apply(builder, HasEquippedCondition::new);
-    });
+    public static final Codec<HasEquippedCondition> CODEC = RecordCodecBuilder.create(builder -> builder.group(Codec.unboundedMap(CodecUtil.EQUIPMENT_SLOT_CODEC, ItemStackCheck.CODEC.listOf()).fieldOf("has_equipped").forGetter(hasEquippedCondition -> hasEquippedCondition.stackChecks)).apply(builder, HasEquippedCondition::new));
 
     private final Map<EquipmentSlot, List<ItemStackCheck>> stackChecks;
     private final Set<Map.Entry<EquipmentSlot, List<ItemStackCheck>>> stackChecksEntries;

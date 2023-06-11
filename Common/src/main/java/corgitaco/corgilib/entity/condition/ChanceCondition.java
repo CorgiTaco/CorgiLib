@@ -5,10 +5,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 public class ChanceCondition implements Condition {
 
-    public static final Codec<ChanceCondition> CODEC = RecordCodecBuilder.create(builder -> {
-        return builder.group(Codec.DOUBLE.fieldOf("chance").forGetter(chanceCondition -> chanceCondition.chance)
-        ).apply(builder, ChanceCondition::new);
-    });
+    public static final Codec<ChanceCondition> CODEC = RecordCodecBuilder.create(builder -> builder.group(Codec.DOUBLE.fieldOf("chance").forGetter(chanceCondition -> chanceCondition.chance)
+    ).apply(builder, ChanceCondition::new));
 
     private final double chance;
 
