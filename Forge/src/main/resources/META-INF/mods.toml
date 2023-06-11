@@ -9,6 +9,7 @@ displayName="CorgiLib" #mandatory
 displayURL="https://github.com/CorgiTaco/CorgiLib" #optional
 logoFile="assets/corgilib/corgilib.png" #optional
 authors="Corgi Taco"
+credits="J.T. McQuigg (JT122406)"
 description='''
 Library with handy utilities.
 '''
