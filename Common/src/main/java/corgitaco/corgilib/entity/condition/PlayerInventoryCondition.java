@@ -13,9 +13,7 @@ import java.util.Map;
 
 public class PlayerInventoryCondition implements Condition {
 
-    public static final Codec<PlayerInventoryCondition> CODEC = RecordCodecBuilder.create(builder -> {
-        return builder.group(ItemStackCheck.CODEC.listOf().fieldOf("has").forGetter(wearingCondition -> wearingCondition.stackChecks)).apply(builder, PlayerInventoryCondition::new);
-    });
+    public static final Codec<PlayerInventoryCondition> CODEC = RecordCodecBuilder.create(builder -> builder.group(ItemStackCheck.CODEC.listOf().fieldOf("has").forGetter(wearingCondition -> wearingCondition.stackChecks)).apply(builder, PlayerInventoryCondition::new));
 
     private final List<ItemStackCheck> stackChecks;
     private final Map<Item, ItemStackCheck> itemItemStackCheckMap;

@@ -7,11 +7,7 @@ import net.minecraft.world.level.Level;
 
 public class PrecipitationAtCondition implements Condition {
 
-    public static Codec<PrecipitationAtCondition> CODEC = RecordCodecBuilder.create(builder -> {
-        return builder.group(BlockPos.CODEC.optionalFieldOf("offset", BlockPos.ZERO).forGetter(precipitationAtCondition -> precipitationAtCondition.offset), Codec.BOOL.optionalFieldOf("snow", false).forGetter(precipitationAtCondition -> {
-            return precipitationAtCondition.snow;
-        })).apply(builder, PrecipitationAtCondition::new);
-    });
+    public static Codec<PrecipitationAtCondition> CODEC = RecordCodecBuilder.create(builder -> builder.group(BlockPos.CODEC.optionalFieldOf("offset", BlockPos.ZERO).forGetter(precipitationAtCondition -> precipitationAtCondition.offset), Codec.BOOL.optionalFieldOf("snow", false).forGetter(precipitationAtCondition -> precipitationAtCondition.snow)).apply(builder, PrecipitationAtCondition::new));
 
     private final BlockPos offset;
     private final boolean snow;

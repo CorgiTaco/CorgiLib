@@ -26,9 +26,7 @@ public class LongPair {
     }
 
     public static Codec<LongPair> createLongPairCodec(String val1Name, String val2Name) {
-        return RecordCodecBuilder.create(builder -> {
-            return builder.group(Codec.LONG.fieldOf(val1Name).forGetter(longPair -> longPair.val1), Codec.LONG.fieldOf(val2Name).forGetter(longPair -> longPair.val2)).apply(builder, LongPair::new);
-        });
+        return RecordCodecBuilder.create(builder -> builder.group(Codec.LONG.fieldOf(val1Name).forGetter(longPair -> longPair.val1), Codec.LONG.fieldOf(val2Name).forGetter(longPair -> longPair.val2)).apply(builder, LongPair::new));
     }
 
     @Override

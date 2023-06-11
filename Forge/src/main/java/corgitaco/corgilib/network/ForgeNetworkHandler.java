@@ -50,9 +50,7 @@ public class ForgeNetworkHandler {
     public static <T extends Packet> void handle(T packet, Supplier<NetworkEvent.Context> ctx, Packet.Handle<T> handle) {
         NetworkEvent.Context context = ctx.get();
         if (context.getDirection().getReceptionSide().isClient()) {
-            context.enqueueWork(() -> {
-                Client.clientHandle(packet, handle);
-            });
+            context.enqueueWork(() -> Client.clientHandle(packet, handle));
         } else {
             ServerPlayer sender = context.getSender();
             handle.handle(packet, sender != null ? sender.level : null, sender);
