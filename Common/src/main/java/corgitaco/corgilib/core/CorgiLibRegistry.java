@@ -1,7 +1,6 @@
 package corgitaco.corgilib.core;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.Lifecycle;
 import corgitaco.corgilib.CorgiLib;
 import corgitaco.corgilib.entity.condition.Condition;
 import corgitaco.corgilib.entity.npc.VillagerTradeRegistry;
@@ -9,7 +8,6 @@ import corgitaco.corgilib.math.blendingfunction.BlendingFunction;
 import corgitaco.corgilib.reg.RegistrationProvider;
 import corgitaco.corgilib.world.level.feature.CorgiLibFeatures;
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.npc.VillagerTrades;

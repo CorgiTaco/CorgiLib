@@ -3,10 +3,7 @@ package corgitaco.corgilib.entity.condition;
 import com.mojang.serialization.Codec;
 import corgitaco.corgilib.CorgiLib;
 import corgitaco.corgilib.core.CorgiLibRegistry;
-import corgitaco.corgilib.math.blendingfunction.BlendingFunction;
 import corgitaco.corgilib.reg.RegistrationProvider;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 
 import java.util.function.Function;
