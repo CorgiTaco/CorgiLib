@@ -33,9 +33,8 @@ public class EntityIsInsideStructureTrackerUpdatePacket implements Packet {
 
     @Override
     public void handle(@Nullable Level level, @Nullable Player player) {
-        Minecraft minecraft = Minecraft.getInstance();
 
-        ClientLevel world = minecraft.level;
+        ClientLevel world = Minecraft.getInstance().level;
         if (world != null) {
             final Entity entity = world.getEntity(this.id);
             if (entity != null) {
