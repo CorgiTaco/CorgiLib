@@ -69,7 +69,7 @@ public class VillagerTradeRegistry {
         try {
             return DataResult.success(MapDecoration.Type.valueOf(type.toUpperCase()));
         } catch (Exception e) {
-            return DataResult.error("Invalid Map Decoration Type! You put \"%s\". Valid values: %s".formatted(type, Arrays.toString(MapDecoration.Type.values())));
+            return DataResult.error(() -> "Invalid Map Decoration Type! You put \"%s\". Valid values: %s".formatted(type, Arrays.toString(MapDecoration.Type.values())));
         }
     }, MapDecoration.Type::name);
 

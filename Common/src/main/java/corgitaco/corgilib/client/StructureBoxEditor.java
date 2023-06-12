@@ -81,7 +81,7 @@ public class StructureBoxEditor {
                     }
 
                     if (isKeyDown(Minecraft.getInstance(), GLFW.GLFW_KEY_LEFT_CONTROL)) {
-                        structureOffset = structureOffset.offset(xStep, yStep, zStep);
+                        structureOffset = structureOffset.offset((int) xStep, (int) yStep, (int) zStep);
                         ModPlatform.PLATFORM.sendToServer(new UpdateStructureBoxPacketC2S(structureBlockPos, structureOffset, new BoundingBox((int) structureBox.minX, (int) structureBox.minY, (int) structureBox.minZ, (int) structureBox.maxX, (int) structureBox.maxY, (int) structureBox.maxZ)));
                         return true;
                     }

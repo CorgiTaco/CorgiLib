@@ -22,13 +22,13 @@ public class EntityIsInsideStructureTrackerUpdatePacket implements Packet {
 
 
     public static EntityIsInsideStructureTrackerUpdatePacket readFromPacket(FriendlyByteBuf buf) {
-        return new EntityIsInsideStructureTrackerUpdatePacket(buf.readVarInt(), buf.readWithCodec(IsInsideStructureTracker.IsInside.CODEC));
+        return new EntityIsInsideStructureTrackerUpdatePacket(buf.readVarInt(), buf.readJsonWithCodec(IsInsideStructureTracker.IsInside.CODEC));
     }
 
     @Override
     public void write(FriendlyByteBuf buf) {
         buf.writeVarInt(this.id);
-        buf.writeWithCodec(IsInsideStructureTracker.IsInside.CODEC, this.isInside);
+        buf.writeJsonWithCodec(IsInsideStructureTracker.IsInside.CODEC, this.isInside);
     }
 
     @Override
