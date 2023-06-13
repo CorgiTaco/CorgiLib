@@ -14,7 +14,6 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class InsideStructureTagCondition implements Condition {
