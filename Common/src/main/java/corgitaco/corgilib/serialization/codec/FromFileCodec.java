@@ -25,7 +25,7 @@ public record FromFileCodec<E>(Codec<E> elementCodec, String internalKey) implem
                 Pair<String, T> stringTPair = id.result().get();
                 String key = stringTPair.getFirst();
                 if (!registry.containsKey(key)) {
-                    return DataResult.error(String.format("\"%s\" does not exist", key));
+                    return DataResult.error(() -> String.format("\"%s\" does not exist", key));
                 } else {
                     E e = registry.get(key);
                     // TODO: Figure out why things rewrap themselves

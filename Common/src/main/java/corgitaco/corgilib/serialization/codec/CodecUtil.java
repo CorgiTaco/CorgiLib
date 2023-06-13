@@ -65,7 +65,7 @@ public class CodecUtil {
         try {
             return DataResult.success(ClickEvent.Action.valueOf(s));
         } catch (Exception e) {
-            return DataResult.error(e.getMessage());
+            return DataResult.error(e::getMessage);
         }
     }, ClickEvent.Action::name);
 
@@ -86,7 +86,7 @@ public class CodecUtil {
                 return DataResult.success((int) Long.parseLong(input.replace("#", "").replace("0x", ""), 16));
             } catch (NumberFormatException e) {
                 e.printStackTrace();
-                return DataResult.error(e.getMessage());
+                return DataResult.error(e::getMessage);
             }
 
         };
@@ -127,7 +127,7 @@ public class CodecUtil {
                     registryElements.append(i).append(". \"").append(registry.getKey(object).toString()).append("\"\n");
                 }
 
-                return DataResult.error(String.format("\"%s\" is not a valid id in registry: %s.\nCurrent Registry Values:\n\n%s\n", location.toString(), registry, registryElements));
+                return DataResult.error(() -> String.format("\"%s\" is not a valid id in registry: %s.\nCurrent Registry Values:\n\n%s\n", location.toString(), registry, registryElements));
             }
             return DataResult.success(result.get());
         }, registry::getKey);

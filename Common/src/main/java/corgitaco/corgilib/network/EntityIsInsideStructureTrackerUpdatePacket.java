@@ -22,20 +22,19 @@ public class EntityIsInsideStructureTrackerUpdatePacket implements Packet {
 
 
     public static EntityIsInsideStructureTrackerUpdatePacket readFromPacket(FriendlyByteBuf buf) {
-        return new EntityIsInsideStructureTrackerUpdatePacket(buf.readVarInt(), buf.readWithCodec(IsInsideStructureTracker.IsInside.CODEC));
+        return new EntityIsInsideStructureTrackerUpdatePacket(buf.readVarInt(), buf.readJsonWithCodec(IsInsideStructureTracker.IsInside.CODEC));
     }
 
     @Override
     public void write(FriendlyByteBuf buf) {
         buf.writeVarInt(this.id);
-        buf.writeWithCodec(IsInsideStructureTracker.IsInside.CODEC, this.isInside);
+        buf.writeJsonWithCodec(IsInsideStructureTracker.IsInside.CODEC, this.isInside);
     }
 
     @Override
     public void handle(@Nullable Level level, @Nullable Player player) {
-        Minecraft minecraft = Minecraft.getInstance();
 
-        ClientLevel world = minecraft.level;
+        ClientLevel world = Minecraft.getInstance().level;
         if (world != null) {
             final Entity entity = world.getEntity(this.id);
             if (entity != null) {
