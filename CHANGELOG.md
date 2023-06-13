@@ -1,3 +1,9 @@
+## 3.0.0.0
+* Update to 1.19.4
+
+## 2.0.0.0
+* Update to 1.19.3.
+
 ## 1.0.0.33
 * Clean up message when config reading fails.
 
