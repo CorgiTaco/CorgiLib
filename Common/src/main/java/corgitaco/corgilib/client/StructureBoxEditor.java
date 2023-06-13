@@ -36,11 +36,11 @@ public class StructureBoxEditor {
     public static BlockPos structureOffset;
 
 
-    public static void render(PoseStack stack, VertexConsumer consumer, double camX, double camY, double camZ) {
+    public static void render(PoseStack stack, VertexConsumer consumer, double camX, double camY, double camZ, boolean b) {
         if (structureBox != null && structureBlockPos != null && structureOffset != null) {
             AABB aabb = structureBox.move(structureOffset).move(structureBlockPos);
 
-            LevelRenderer.renderVoxelShape(stack, consumer, Shapes.create(aabb), -camX, -camY - 1, -camZ, 1, 0, 0, 0);
+            LevelRenderer.renderVoxelShape(stack, consumer, Shapes.create(aabb), -camX, -camY - 1, -camZ, 1, 0, 0, 0, b);
         }
     }
 

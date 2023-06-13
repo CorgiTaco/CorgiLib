@@ -10,8 +10,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 import java.util.Map;
@@ -101,14 +101,12 @@ public class FabricNetworkHandler {
                 buf.retain();
                 server.execute(() -> {
                     T packet = decode.apply(buf);
-                    ServerLevel level = player.getLevel();
-                    if (level != null) {
-                        try {
-                            handler.handle(packet, level, player);
-                        } catch (Throwable throwable) {
-                            CorgiLib.LOGGER.error("Packet failed: ", throwable);
-                            throw throwable;
-                        }
+                    Level level = player.level();
+                    try {
+                        handler.handle(packet, level, player);
+                    } catch (Throwable throwable) {
+                        CorgiLib.LOGGER.error("Packet failed: ", throwable);
+                        throw throwable;
                     }
                     buf.release();
                 });
