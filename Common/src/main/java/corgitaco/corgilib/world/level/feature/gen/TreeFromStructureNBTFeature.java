@@ -76,7 +76,7 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
             throw new IllegalArgumentException("There cannot be more than one trunk central position for structure NBT palette %s. Trunk central position is specified with white wool.".formatted(config.baseLocation()));
         }
 
-        BlockPos centerOffset = center.get(0).pos;
+        BlockPos centerOffset = center.get(0).pos();
         centerOffset = new BlockPos(-centerOffset.getX(), 0, -centerOffset.getZ());
 
 
@@ -121,7 +121,7 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
         List<StructureTemplate.StructureBlockInfo> additionalBlocks = getStructureInfosInStructurePalletteFromBlockList(config.placeFromNBT(), palette);
         for (StructureTemplate.StructureBlockInfo additionalBlock : additionalBlocks) {
             BlockPos pos = getModifiedPos(placeSettings, additionalBlock, centerOffset, origin);
-            level.setBlock(pos, additionalBlock.state, 2);
+            level.setBlock(pos, additionalBlock.state(), 2);
         }
     }
 
@@ -145,7 +145,7 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
         }
 
         StructureTemplate.StructureBlockInfo structureBlockInfo = canopyAnchor.get(0);
-        BlockPos canopyCenterOffset = structureBlockInfo.pos;
+        BlockPos canopyCenterOffset = structureBlockInfo.pos();
         canopyCenterOffset = new BlockPos(-canopyCenterOffset.getX(), trunkLength, -canopyCenterOffset.getZ());
 
         List<StructureTemplate.StructureBlockInfo> trunkFillers = new ArrayList<>(randomCanopyPalette.blocks(Blocks.RED_WOOL));
@@ -161,7 +161,7 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
     public static void placeLogsWithRotation(BlockStateProvider logProvider, WorldGenLevel level, BlockPos origin, RandomSource random, StructurePlaceSettings placeSettings, BlockPos centerOffset, List<StructureTemplate.StructureBlockInfo> logs, Set<BlockPos> trunkPositions) {
         for (StructureTemplate.StructureBlockInfo trunk : logs) {
             BlockPos pos = getModifiedPos(placeSettings, trunk, centerOffset, origin);
-            level.setBlock(pos, getTransformedState(logProvider.getState(random, pos), trunk.state, placeSettings.getRotation()), 2);
+            level.setBlock(pos, getTransformedState(logProvider.getState(random, pos), trunk.state(), placeSettings.getRotation()), 2);
             trunkPositions.add(pos);
         }
     }
@@ -180,8 +180,8 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
             if (leavesPlacementFilter.test(level, modifiedPos)) {
                 BlockState state = leavesProvider.getState(random, modifiedPos);
 
-                if (state.hasProperty(LeavesBlock.DISTANCE) && leaf.state.hasProperty(LeavesBlock.DISTANCE)) {
-                    state = state.setValue(LeavesBlock.DISTANCE, leaf.state.getValue(LeavesBlock.DISTANCE));
+                if (state.hasProperty(LeavesBlock.DISTANCE) && leaf.state().hasProperty(LeavesBlock.DISTANCE)) {
+                    state = state.setValue(LeavesBlock.DISTANCE, leaf.state().getValue(LeavesBlock.DISTANCE));
                 }
                 if (state.hasProperty(LeavesBlock.WATERLOGGED)) {
                     FluidState fluidState = level.getFluidState(modifiedPos);
@@ -270,7 +270,7 @@ public class TreeFromStructureNBTFeature extends Feature<TreeFromStructureNBTCon
     }
 
     public static BlockPos getModifiedPos(StructurePlaceSettings settings, StructureTemplate.StructureBlockInfo placing, BlockPos partCenter, BlockPos featureOrigin) {
-        return StructureTemplate.calculateRelativePosition(settings, placing.pos).offset(featureOrigin).offset(StructureTemplate.calculateRelativePosition(settings, partCenter));
+        return StructureTemplate.calculateRelativePosition(settings, placing.pos()).offset(featureOrigin).offset(StructureTemplate.calculateRelativePosition(settings, partCenter));
     }
 
     public static IllegalArgumentException noTreePartPresent(ResourceLocation location) {

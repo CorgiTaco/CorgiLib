@@ -54,7 +54,7 @@ public class ForgeNetworkHandler {
             context.enqueueWork(() -> Client.clientHandle(packet, handle));
         } else {
             ServerPlayer sender = context.getSender();
-            handle.handle(packet, sender != null ? sender.level : null, sender);
+            handle.handle(packet, sender != null ? sender.level() : null, sender);
         }
         context.setPacketHandled(true);
     }
