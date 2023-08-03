@@ -15,8 +15,8 @@ import java.util.function.Function;
 public interface Packet {
     Map<String, Handler<?>> PACKETS = Util.make(new HashMap<>(), map -> {
         CorgiLib.LOGGER.info("Initializing network...");
-        map.put("is_entity_inside_structure", new Handler<>(EntityIsInsideStructureTrackerUpdatePacket.class, PacketDirection.SERVER_TO_CLIENT, EntityIsInsideStructureTrackerUpdatePacket::write, EntityIsInsideStructureTrackerUpdatePacket::readFromPacket, EntityIsInsideStructureTrackerUpdatePacket::handle));
-        map.put("update_structure", new Handler<>(UpdateStructureBoxPacketC2S.class, PacketDirection.CLIENT_TO_SERVER, UpdateStructureBoxPacketC2S::write, UpdateStructureBoxPacketC2S::readFromPacket, UpdateStructureBoxPacketC2S::handle));
+        map.put(CorgiLib.createLocation("is_entity_inside_structure").toString(), new Handler<>(EntityIsInsideStructureTrackerUpdatePacket.class, PacketDirection.SERVER_TO_CLIENT, EntityIsInsideStructureTrackerUpdatePacket::write, EntityIsInsideStructureTrackerUpdatePacket::readFromPacket, EntityIsInsideStructureTrackerUpdatePacket::handle));
+        map.put(CorgiLib.createLocation("update_structure").toString(), new Handler<>(UpdateStructureBoxPacketC2S.class, PacketDirection.CLIENT_TO_SERVER, UpdateStructureBoxPacketC2S::write, UpdateStructureBoxPacketC2S::readFromPacket, UpdateStructureBoxPacketC2S::handle));
         CorgiLib.LOGGER.info("Initialized network!");
     });
 

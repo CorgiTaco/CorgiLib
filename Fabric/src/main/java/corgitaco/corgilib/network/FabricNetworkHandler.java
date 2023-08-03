@@ -22,6 +22,11 @@ import java.util.function.Function;
 public class FabricNetworkHandler {
 
     private static final String PACKET_LOCATION = CorgiLib.MOD_ID;
+    private static final Function<String, ResourceLocation> PACKET_ID = id -> {
+        ResourceLocation value = new ResourceLocation(id);
+
+        return value.getNamespace().equals("minecraft") ? new ResourceLocation(CorgiLib.MOD_ID, id) : value;
+    };
 
     private static final Map<Class<? extends Packet>, BiConsumer<?, FriendlyByteBuf>> ENCODERS = new ConcurrentHashMap<>();
     private static final Map<Class<? extends Packet>, ResourceLocation> PACKET_IDS = new ConcurrentHashMap<>();
@@ -39,7 +44,7 @@ public class FabricNetworkHandler {
                                                            Function<FriendlyByteBuf, T> decode,
                                                            Packet.Handle<T> handler) {
         ENCODERS.put(clazz, encode);
-        PACKET_IDS.put(clazz, new ResourceLocation(PACKET_LOCATION, id));
+        PACKET_IDS.put(clazz, PACKET_ID.apply(id));
 
 
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
@@ -76,7 +81,7 @@ public class FabricNetworkHandler {
 
         public static <T extends Packet> void registerClientReceiver(String id, Function<FriendlyByteBuf, T> decode,
                                                                      Packet.Handle<T> handler) {
-            ClientPlayNetworking.registerGlobalReceiver(new ResourceLocation(PACKET_LOCATION, id), (client, listener, buf, responseSender) -> {
+            ClientPlayNetworking.registerGlobalReceiver(PACKET_ID.apply(id), (client, listener, buf, responseSender) -> {
                 buf.retain();
                 client.execute(() -> {
                     T packet = decode.apply(buf);
@@ -97,7 +102,7 @@ public class FabricNetworkHandler {
 
     public static class ServerProxy {
         private static <T extends Packet> void registerServerReceiver(String id, Function<FriendlyByteBuf, T> decode, Packet.Handle<T> handler) {
-            ServerPlayNetworking.registerGlobalReceiver(new ResourceLocation(PACKET_LOCATION, id), (server, player, handler1, buf, responseSender) -> {
+            ServerPlayNetworking.registerGlobalReceiver(PACKET_ID.apply(id), (server, player, handler1, buf, responseSender) -> {
                 buf.retain();
                 server.execute(() -> {
                     T packet = decode.apply(buf);
