@@ -1,3 +1,10 @@
+## 4.0.0.2
+* Improve Draw Ring method.
+
+## 4.0.0.1
+* Add Render Utils
+* Add the ability to register packets under other name spaces in a reverse compatible way.
+
 ## 4.0.0.0
 * Update to 1.20.1
 
