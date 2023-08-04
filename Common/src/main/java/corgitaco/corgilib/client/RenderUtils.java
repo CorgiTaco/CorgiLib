@@ -75,8 +75,8 @@ public class RenderUtils {
         float multiplier = Mth.PI * 2;
 
         for (int segmentIdx = 0; segmentIdx < segments; segmentIdx++) {
-            float hPct = segmentIdx / segments;
-            float nextHPct = (float) (segmentIdx + 1) / segments;
+            float hPct = ((float) segmentIdx) / segments;
+            float nextHPct = ((float) (segmentIdx + 1)) / segments;
 
             float startX = Mth.sin(hPct * multiplier) * distance;
             float startZ = Mth.cos(hPct * multiplier) * distance;

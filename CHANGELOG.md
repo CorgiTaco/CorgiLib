@@ -1,3 +1,6 @@
+# 4.0.0.4
+* Fix `drawRing` hPct calculation in RenderUtils.
+
 # 4.0.0.3
 * Fix RenderType in RenderUtils.
 
