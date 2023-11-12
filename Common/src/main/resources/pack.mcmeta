@@ -1,6 +1,6 @@
 {
     "pack": {
-        "description": "${mod_name}",
+        "description": "CorgiLib",
         "pack_format": 15
     }
 }

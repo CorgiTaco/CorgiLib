@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'com.matyrobbrt.mc.registrationutils' version '1.20-1.0.0'
+    id 'com.matyrobbrt.mc.registrationutils' version '1.20.1-1.0.0'
 }
 
 registrationUtils {
@@ -22,8 +22,8 @@ subprojects {
     java.withJavadocJar()
 
     dependencies {
-        compileOnly group:'com.google.auto.service', name:'auto-service', version:'1.1.0'
-        annotationProcessor group:'com.google.auto.service', name:'auto-service', version:'1.1.0'
+        compileOnly group:'com.google.auto.service', name:'auto-service', version:'1.1.1'
+        annotationProcessor group:'com.google.auto.service', name:'auto-service', version:'1.1.1'
         compileOnly("com.google.code.findbugs:jsr305:3.0.2")
     }
         
@@ -62,7 +62,7 @@ subprojects {
 
     tasks.withType(JavaCompile).configureEach {
         it.options.encoding = 'UTF-8'
-        it.options.release = 17
+        it.options.release.set(17)
     }
 
     // Disables Gradle's custom module metadata from being published to maven. The
