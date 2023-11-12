@@ -1,3 +1,8 @@
+# 4.0.0.5
+* Update Included Jankson to 1.2.3
+* Update included toml to 3.6.7
+* Update included RegUtils to 1.20.1
+
 # 4.0.0.4
 * Fix `drawRing` hPct calculation in RenderUtils.
 
