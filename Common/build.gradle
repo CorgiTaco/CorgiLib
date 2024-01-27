@@ -1,7 +1,6 @@
 import com.matyrobbrt.gradle.pngoptimiser.task.OptimisePNGTask
 
 plugins {
-    id('java')
     id('org.spongepowered.gradle.vanilla') version '0.2.1-SNAPSHOT'
     id('com.matyrobbrt.pngoptimiser') version '0.2.0'
 }
@@ -18,7 +17,6 @@ minecraft {
     version(minecraft_version)
     runs {
         if (project.hasProperty('common_runs_enabled') ? project.findProperty('common_runs_enabled').toBoolean() : true) {
-
             server(project.hasProperty('common_server_run_name') ? project.findProperty('common_server_run_name') : 'vanilla_server') {
                 workingDirectory(this.file("run"))
             }

@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'idea'
     id 'com.matyrobbrt.mc.registrationutils' version '1.20.1-1.0.1'
 }
 
@@ -14,8 +15,9 @@ registrationUtils {
 
 
 subprojects {
-    
     apply plugin: 'java'
+    apply plugin: 'maven-publish'
+    apply plugin: 'idea'
     
     java.toolchain.languageVersion = JavaLanguageVersion.of(17)
     java.withSourcesJar()
@@ -45,17 +47,17 @@ subprojects {
     }
     
     repositories {
-
         mavenCentral()
-
         maven {
             name = 'Sponge / Mixin'
             url = 'https://repo.spongepowered.org/repository/maven-public/'
         }
-
         maven {
             name = 'BlameJared Maven (CrT / Bookshelf)'
             url = 'https://maven.blamejared.com'
+        }
+        maven {
+            url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
         }
     }
     
