@@ -17,13 +17,11 @@ Accessible field net/minecraft/world/entity/npc/VillagerTrades$EmeraldForItems i
 Accessible field net/minecraft/world/entity/npc/VillagerTrades$EmeraldForItems cost I
 Accessible field net/minecraft/world/entity/npc/VillagerTrades$EmeraldForItems maxUses I
 Accessible field net/minecraft/world/entity/npc/VillagerTrades$EmeraldForItems villagerXp I
-Accessible field net/minecraft/world/entity/npc/VillagerTrades$EmeraldForItems priceMultiplier F
 Accessible field net/minecraft/world/entity/npc/VillagerTrades$ItemsForEmeralds itemStack Lnet/minecraft/world/item/ItemStack;
 Accessible field net/minecraft/world/entity/npc/VillagerTrades$ItemsForEmeralds emeraldCost I
 Accessible field net/minecraft/world/entity/npc/VillagerTrades$ItemsForEmeralds numberOfItems I
 Accessible field net/minecraft/world/entity/npc/VillagerTrades$ItemsForEmeralds maxUses I
 Accessible field net/minecraft/world/entity/npc/VillagerTrades$ItemsForEmeralds villagerXp I
-Accessible field net/minecraft/world/entity/npc/VillagerTrades$ItemsForEmeralds priceMultiplier F
 Accessible field net/minecraft/world/entity/npc/VillagerTrades$ItemsAndEmeraldsToItems fromItem Lnet/minecraft/world/item/ItemStack;
 Accessible field net/minecraft/world/entity/npc/VillagerTrades$ItemsAndEmeraldsToItems fromCount I
 Accessible field net/minecraft/world/entity/npc/VillagerTrades$ItemsAndEmeraldsToItems emeraldCost I
