@@ -1,4 +1,5 @@
-# 4.0.0.5
+# 4.0.1.0
+* Remove Everything Trees use new Oh The Trees You'll Grow mod. https://github.com/CorgiTaco/Oh-The-Trees-Youll-Grow
 * Update Included Jankson to 1.2.3
 * Update included toml to 3.6.7
 * Update included RegUtils to 1.20.1
