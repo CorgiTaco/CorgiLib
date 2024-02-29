@@ -15,10 +15,21 @@ tasks.build.dependsOn(shadowJar)
 configurations {
     shadow
     implementation.extendsFrom(shadow)
+    implementation.extendsFrom lib
+    api.extendsFrom lib
 }
 shadowJar {
     configurations = [project.configurations.shadow]
     relocate 'blue.endless.jankson', "${project.group}.shadow.blue.endless.jankson"
+
+    relocate "org.objectweb.asm", "${project.group}.lib.asm"
+    relocate "org.lwjgl.opencl", "${project.group}.lib.opencl"
+
+    relocate "io.github.spair:imgui-java-binding:$imgui_version", "${project.group}.relocated.imgui-java-binding"
+    relocate "io.github.spair:imgui-java-lwjgl3:$imgui_version", "${project.group}.relocated.imgui-java-lwjgl3"
+    relocate "io.github.spair:imgui-java-natives-linux:$imgui_version", "${project.group}.relocated.imgui-java-natives-linux"
+    relocate "io.github.spair:imgui-java-natives-windows:$imgui_version", "${project.group}.relocated.imgui-java-natives-windows"
+    relocate "io.github.spair:imgui-java-natives-macos:$imgui_version", "${project.group}.relocated.imgui-java-natives-macos"
 }
 
 archivesBaseName = "${mod_name}-fabric-${minecraft_version}"
@@ -54,6 +65,13 @@ dependencies {
     include implementation("com.electronwill.night-config:toml:${nightconfig_version}")
     include implementation("com.electronwill.night-config:core:${nightconfig_version}")
     shadow("blue.endless:jankson:${jankson_version}")
+
+    shadow ("io.github.spair:imgui-java-binding:${project.imgui_version}")
+    shadow ("io.github.spair:imgui-java-lwjgl3:${project.imgui_version}")
+
+    shadow ("io.github.spair:imgui-java-natives-windows:${project.imgui_version}")
+    shadow ("io.github.spair:imgui-java-natives-linux:${project.imgui_version}")
+    shadow ("io.github.spair:imgui-java-natives-macos:${project.imgui_version}")
 }
 reg.configureJarTask(shadowJar)
 

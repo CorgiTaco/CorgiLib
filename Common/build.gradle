@@ -34,6 +34,14 @@ dependencies {
     compileOnly("org.ow2.asm:asm-tree:${asm_version}")
     compileOnly("com.electronwill.night-config:toml:${nightconfig_version}")
     compileOnly("blue.endless:jankson:${jankson_version}")
+
+
+    compileOnly("io.github.spair:imgui-java-binding:${project.imgui_version}")
+    compileOnly("io.github.spair:imgui-java-lwjgl3:${project.imgui_version}")
+
+    compileOnly ("io.github.spair:imgui-java-natives-windows:${project.imgui_version}")
+    compileOnly ("io.github.spair:imgui-java-natives-linux:${project.imgui_version}")
+    compileOnly ("io.github.spair:imgui-java-natives-macos:${project.imgui_version}")
 }
 
 processResources {
