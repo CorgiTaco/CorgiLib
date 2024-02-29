@@ -9,7 +9,6 @@ import corgitaco.corgilib.reg.RegistrationProvider;
 import corgitaco.corgilib.world.level.feature.CorgiLibFeatures;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.npc.VillagerTrades;
 
 import java.util.function.Supplier;
@@ -24,7 +23,7 @@ public class CorgiLibRegistry {
 
     public static final Supplier<Registry<Codec<? extends VillagerTrades.ItemListing>>> VILLAGER_TRADES_ITEM_LISTING = RegistrationProvider.get(VILLAGER_TRADES_ITEM_LISTING_RESOURCE_KEY, CorgiLib.MOD_ID).registryBuilder().build();
 
-    public static final ResourceKey<Registry<Codec<? extends Condition>>> CONDITION_KEY = ResourceKey.createRegistryKey(new ResourceLocation(CorgiLib.MOD_ID, "condition"));
+    public static final ResourceKey<Registry<Codec<? extends Condition>>> CONDITION_KEY = ResourceKey.createRegistryKey(CorgiLib.createLocation("condition"));
 
     public static final Supplier<Registry<Codec<? extends Condition>>> CONDITION = RegistrationProvider.get(CONDITION_KEY, CorgiLib.MOD_ID).registryBuilder().build();
 

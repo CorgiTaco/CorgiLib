@@ -168,7 +168,7 @@ task fabric_publishCurseForge(type: TaskPublishCurseForge) {
     mainFile.changelogType = "markdown"
     mainFile.releaseType = "${project.release_type}"
     mainFile.addGameVersion("${project.minecraft_version}")
-    mainFile.addModLoader("fabric")
+    mainFile.addModLoader("fabric", "quilt")
 }
 
 
@@ -184,7 +184,7 @@ task fabric_publishModrinth (type: TaskModrinthUpload){
         uploadFile = remapJar
         changelog = changelogText
         gameVersions = ["${project.minecraft_version}"]
-        loaders = ['fabric']
+        loaders = ['fabric', 'quilt']
     }
 }
 

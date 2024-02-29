@@ -25,7 +25,7 @@ public class FabricNetworkHandler {
     private static final Function<String, ResourceLocation> PACKET_ID = id -> {
         ResourceLocation value = new ResourceLocation(id);
 
-        return value.getNamespace().equals("minecraft") ? new ResourceLocation(CorgiLib.MOD_ID, id) : value;
+        return value.getNamespace().equals("minecraft") ? CorgiLib.createLocation(id) : value;
     };
 
     private static final Map<Class<? extends Packet>, BiConsumer<?, FriendlyByteBuf>> ENCODERS = new ConcurrentHashMap<>();

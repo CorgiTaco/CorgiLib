@@ -2,7 +2,6 @@ package corgitaco.corgilib.network;
 
 import corgitaco.corgilib.CorgiLib;
 import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
@@ -16,7 +15,7 @@ import java.util.function.Supplier;
 public class ForgeNetworkHandler {
     private static final String PROTOCOL_VERSION = "1";
     public static final SimpleChannel SIMPLE_CHANNEL = NetworkRegistry.newSimpleChannel(
-            new ResourceLocation(CorgiLib.MOD_ID, "network"),
+            CorgiLib.createLocation("network"),
             () -> PROTOCOL_VERSION,
             PROTOCOL_VERSION::equals,
             PROTOCOL_VERSION::equals
