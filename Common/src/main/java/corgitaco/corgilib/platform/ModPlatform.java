@@ -5,6 +5,7 @@ import corgitaco.corgilib.network.Packet;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.List;
 import java.util.ServiceLoader;
 
@@ -32,6 +33,10 @@ public interface ModPlatform {
      * @return True if in a development environment, false otherwise.
      */
     boolean isDevelopmentEnvironment();
+
+
+    Collection<String> getModIDS();
+
 
     <P extends Packet> void sendToClient(ServerPlayer player, P packet);
 
