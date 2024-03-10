@@ -1,3 +1,6 @@
+# 4.0.1.1
+* Fix Crashing when running on MacOS
+
 # 4.0.1.0
 * Remove Everything Trees use new Oh The Trees You'll Grow mod. https://github.com/CorgiTaco/Oh-The-Trees-Youll-Grow
 * Update Included Jankson to 1.2.3

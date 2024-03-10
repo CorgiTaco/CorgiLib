@@ -129,7 +129,7 @@ dependencies {
     }
 
      minecraftLibrary shadow("io.github.spair:imgui-java-natives-linux:$imgui_version")
-     minecraftLibrary shadow("io.github.spair:imgui-java-natives-macos:$imgui_version")
+     //minecraftLibrary shadow("io.github.spair:imgui-java-natives-macos:$imgui_version")
      minecraftLibrary shadow("io.github.spair:imgui-java-natives-windows:$imgui_version")
 
 }
