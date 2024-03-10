@@ -1,6 +1,7 @@
 package corgitaco.corgilib.mixin.client;
 
 import corgitaco.corgilib.client.imgui.ImguiTest;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,6 +13,8 @@ public class GameRendererMixin {
 
     @Inject(method = "render", at = @At("RETURN"))
     private void corgiLib$RenderImGui(float pPartialTicks, long pNanoTime, boolean pRenderLevel, CallbackInfo ci) {
-        ImguiTest.renderTest();
+        if(!Minecraft.ON_OSX) {
+            ImguiTest.renderTest();
+        }
     }
 }
